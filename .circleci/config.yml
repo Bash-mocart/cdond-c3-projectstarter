@@ -43,7 +43,10 @@ jobs:
       - run:
           name: Build front-end
           command: |
+            cd frontend
             npm i
+            npm run build
+            npm run lint
             # Your code here
       - save_cache:
           paths: [frontend/node_modules]
@@ -59,6 +62,10 @@ jobs:
       - run:
           name: Back-end build
           command: |
+            cd backend
+            npm i
+            npm run build
+            npm run lint
              # Your code here
              exit 1
       - save_cache:
@@ -67,40 +74,84 @@ jobs:
 
   test-frontend:
     docker:
+      - image: cimg/node:16.8.0
       # Docker image here
     steps:
+      - checkout
       # Checkout code from git
+      - restore_cache:
+          keys: [frontend-build]
       # Restore from cache
+      - run:  
+          name: Test front-end
+          command: |
+            cd frontend
+            apt install nodejs
+            npm i
+            npm run test
+            # Your code here
       # Your job code here
                 
   test-backend:
     docker:
+      - image: cimg/node:16.8.0
       # Docker image here
     steps:
+      - checkout
       # Checkout code from git
+      - restore_cache:
+          keys: [backend-build]
       # Restore from cache
+       - run:  
+          name: Test back-end
+          command: |
+            cd backend
+            apt install nodejs
+            npm i
+            npm run test
+            # Your code here
       # Your job code here
             
   scan-frontend:
     docker:
+      - image: cimg/node:16.8.0
       # Docker image here
     steps:
+      - checkout
       # Checkout code from git
+      - restore_cache:
+          keys: [frontend-build]
       # Restore from cache
+      - run:  
+          name: Scan front-end
+          command: |
+            cd frontend
+            npm run audit
       # Your job code here
 
   scan-backend:
     docker:
+      - image: cimg/node:16.8.0
       # Docker image here
     steps:
+      - checkout
       # Checkout code from git
+      - restore_cache:
+          keys: [backend-build]
       # Restore from cache
+      - run:  
+          name: Scan back-end
+          command: |
+            cd backend
+            npm run audit --audit-level=critical
       # Your job code here
 
   deploy-infrastructure:
     docker:
+      - image: amazon/aws-cli
       # Docker image here that supports AWS CLI
     steps:
+      - checkout
       # Checkout code from git
       - run:
           name: Ensure back-end infrastructure exists
@@ -133,16 +184,20 @@ jobs:
 
   configure-infrastructure:
     docker:
+      - image: python:3.7-alpine3.11
       # Docker image here that supports Ansible
     steps:
+      - checkout
       # Checkout code from git
+      - add_ssh_keys:
+          fingerprints: ["0c:55:f7:d7:ad:e3:73:19:0b:e6:c6:46:5c:04:76:94"]
       # Add ssh keys with fingerprint
       # attach workspace
       - run:
           name: Install dependencies
           command: |
             # Your code here
-            exit 1
+            apk add --update ansible 
       - run:
           name: Configure server
           command: |
