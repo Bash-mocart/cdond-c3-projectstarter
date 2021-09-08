@@ -44,8 +44,7 @@ jobs:
           name: Build front-end
           command: |
             cd frontend
-            npm i
-            npm fund
+            npm 
             npm run lint
             npm run build
             # Your code here
@@ -65,7 +64,6 @@ jobs:
           command: |
             cd backend
             npm i
-            npm fund
             npm run lint
             npm run build
             
