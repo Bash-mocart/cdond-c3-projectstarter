@@ -45,8 +45,9 @@ jobs:
           command: |
             cd frontend
             npm i
-            npm run build
+            npm fund
             npm run lint
+            npm run build
             # Your code here
       - save_cache:
           paths: [frontend/node_modules]
@@ -64,8 +65,10 @@ jobs:
           command: |
             cd backend
             npm i
-            # npm run build
+            npm fund
             npm run lint
+            npm run build
+            
              # Your code here
              exit 1
       - save_cache:
