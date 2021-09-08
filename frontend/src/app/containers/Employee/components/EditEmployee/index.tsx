@@ -366,7 +366,7 @@ export class EditEmployee extends Component<EditEmployee.Props, EditEmployee.Sta
       { effectiveDate },
       () => this.props.actions.updateDateField(this.state.employeeId, { value: effectiveDate }, 'effectiveDate'),
       !isInputEmpty(effectiveDate.toString()),
-      `Effective Date is invalid`, 
+      `Effective Date is invalid`,
     );
   }
 
