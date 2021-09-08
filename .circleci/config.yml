@@ -130,11 +130,6 @@ jobs:
           command: |
             cd frontend
             npm i
-            npm audit --audit-level=critical
-      - run: 
-          name: Fix Vulnerabilities
-          command: |
-            npm install
             npm audit fix --audit-level=critical --force
       # Your job code here
 
@@ -153,11 +148,6 @@ jobs:
           command: |
             cd backend
             npm i
-            npm audit --audit-level=critical
-      - run: 
-          name: Fix Vulnerabilities
-          command: |
-            npm install
             npm audit fix --audit-level=critical --force
       # Your job code here
 
