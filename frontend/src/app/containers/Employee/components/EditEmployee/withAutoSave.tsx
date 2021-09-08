@@ -12,7 +12,7 @@ export const withAutoSave = (Component: React.ComponentClass<any>) => {
     }
 
     render() {
-      return <Component {...this.props} debounce={this.debounce} />
-    };
+      return <Component {...this.props} debounce={this.debounce} />;
+    }
   };
 };
