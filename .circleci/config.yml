@@ -131,6 +131,7 @@ jobs:
             cd frontend
             npm i
             npm audit --audit-level=critical
+            npm install
             npm audit fix --audit-level=critical --force
       # Your job code here
 
@@ -150,6 +151,7 @@ jobs:
             cd backend
             npm i
             npm audit --audit-level=critical
+            npm install
             npm audit fix --audit-level=critical --force
       # Your job code here
 
