@@ -207,6 +207,7 @@ jobs:
 
   run-migrations:
     docker:
+      - image: cimg/node:16.8.0
       # Docker image here that supports NodeJS
     steps:
       # Checkout code from git
@@ -224,6 +225,7 @@ jobs:
 
   deploy-frontend:
     docker:
+      - image: amazon/aws-cli
       # Docker image here that supports AWS CLI
     steps:
       # Checkout code from git
@@ -245,6 +247,7 @@ jobs:
                     
   deploy-backend:
     docker:
+      - image: python:3.7-alpine3.11
       # Docker image here that supports Ansible
     steps:
       # Checkout code from git
@@ -262,6 +265,7 @@ jobs:
 
   smoke-test:
     docker:
+      - image: circleci/node:13.8.0
       # Lightweight Docker image 
     steps:
       # Checkout code from git
@@ -285,6 +289,7 @@ jobs:
 
   cloudfront-update:
     docker:
+      - image: amazon/aws-cli
       # Docker image here that supports AWS CLI
     steps:
       # Checkout code from git
