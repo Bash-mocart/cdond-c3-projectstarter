@@ -47,7 +47,9 @@ jobs:
             npm i
             npm run lint
             npm run build
-            # Your code here
+            cd dist
+            ls
+           
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -66,7 +68,9 @@ jobs:
             npm i
             npm run lint
             npm run build
-             # Your code here
+            cd dist
+            ls
+      
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
