@@ -131,8 +131,11 @@ jobs:
             cd frontend
             npm i
             npm audit --audit-level=critical
-            npm install
-            npm audit fix --audit-level=critical --force
+      - run: 
+        name: Fix Vulnerabilities
+        command: |
+          npm install
+          npm audit fix --audit-level=critical --force
       # Your job code here
 
   scan-backend:
@@ -151,6 +154,9 @@ jobs:
             cd backend
             npm i
             npm audit --audit-level=critical
+      - run: 
+          name: Fix Vulnerabilities
+          command: |
             npm install
             npm audit fix --audit-level=critical --force
       # Your job code here
