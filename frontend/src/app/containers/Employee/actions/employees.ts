@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { createAction } from 'redux-actions';
-import { 
+import {
   EmployeeModel,
   EmployeeUpdateStringFieldModel,
   EmployeeUpdateNumberFieldModel,

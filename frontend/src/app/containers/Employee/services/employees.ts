@@ -35,12 +35,11 @@ export class EmployeesService {
     return this.httpService.post(this.employeesUrl, employee);
   }
 
-  updateField = (id: string, payload: employeeUpdateTypes ,
-  fieldName: string) => {
+  updateField = (id: string, payload: employeeUpdateTypes , fieldName: string) => {
     const payloadReady: {[key: string]: string|Date|number} = {};
     payloadReady[fieldName] = payload.value;
     return this.httpService.put(`${this.employeesUrl}/${id}/${fieldName}`, payloadReady);
-  } 
+  }
 
   updateAddress = (id: string, payload: EmployeeUpdateAddressModel) => {
     return this.httpService.put(`${this.employeesUrl}/${id}/address`, payload);

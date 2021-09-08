@@ -76,7 +76,7 @@ export class ActionsMenu extends React.Component<ActionsMenu.Props> {
       {
         label: !this.props.isActive ? 'Activate' : 'Deactivate',
         click: () => {
-          this.props.isActive ? this.props.actions.deactivateEmployee(this.props.employeeId) : 
+          this.props.isActive ? this.props.actions.deactivateEmployee(this.props.employeeId) :
           this.props.actions.activateEmployee(this.props.employeeId);
           this.props.actions.fetchEmployees();
         },
