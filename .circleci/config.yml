@@ -89,10 +89,10 @@ jobs:
           name: Test front-end
           command: |
             cd frontend
-            apt install nodejs
+            sudo apt install nodejs
             npm i
             npm run test
-            # Your code here
+           
       # Your job code here
                 
   test-backend:
@@ -109,7 +109,7 @@ jobs:
           name: Test back-end
           command: |
             cd backend
-            apt install nodejs
+            sudo apt install nodejs
             npm i
             npm run test
             # Your code here
