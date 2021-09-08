@@ -129,7 +129,7 @@ jobs:
           name: Scan front-end
           command: |
             cd frontend
-            npm run audit
+            npm audit --audit-level=critical
       # Your job code here
 
   scan-backend:
@@ -146,7 +146,7 @@ jobs:
           name: Scan back-end
           command: |
             cd backend
-            npm run audit --audit-level=critical
+            npm audit --audit-level=critical
       # Your job code here
 
   deploy-infrastructure:
