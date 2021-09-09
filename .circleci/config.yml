@@ -230,13 +230,7 @@ jobs:
       - run:
           name: Run migrations
           command: |
-            npm install
-            npm run migrations
-            echo migration successfull >> migrationsuccess.txt
-
-
-
-            
+                  
       - run:
           name: Send migration results to memstash
           command: |
