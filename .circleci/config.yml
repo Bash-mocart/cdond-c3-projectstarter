@@ -245,7 +245,6 @@ jobs:
 
             # Your code here
       - revert-migrations:
-          when: on_fail
 
      # Here's where you will add some code to rollback on failure      
 
