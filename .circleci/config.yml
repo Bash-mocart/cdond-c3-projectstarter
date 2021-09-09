@@ -10,8 +10,13 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
+            aws s3 rm s3://mybucket --recursive
+            aws cloudformation delete-stack \
+            --stack-name backendu15ch1136b
+            aws cloudformation delete-stack \
+            --stack-name frontendu15ch1136f
             # Your code here
-            exit 1
+            
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
@@ -31,7 +36,6 @@ commands:
               npm install
               npm run migrations:revert
             #  Add revert code here. You can find this in the Getting Started section.
-            
             ss  
             fi
             
@@ -165,8 +169,8 @@ jobs:
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
               --tags project=udacity-backend \
-              --stack-name "backendu15ch1136b" \
-              --parameter-overrides ID="u15ch1136b"  
+              --stack-name backendu15ch1136b \
+              --parameter-overrides ID=u15ch1136b 
               
       - run:
           name: Ensure front-end infrastructure exist
@@ -174,8 +178,8 @@ jobs:
             aws cloudformation deploy \
               --template-file .circleci/files/frontend.yml \
               --tags project=udacity-frontend \
-              --stack-name "frontendu15ch1136f" \
-              --parameter-overrides ID="u15ch1136f"  
+              --stack-name frontendu15ch1136f \
+              --parameter-overrides ID=u15ch1136f 
       
       - run:
           name: Add back-end ip to ansible inventory
@@ -214,6 +218,8 @@ jobs:
           name: Configure server
           command: |
             ansible-playbook -i inventory.txt configure-server.yml
+      - destroy-environment:
+          when: on_fail
             
             
       # Here's where you will add some code to rollback on failure      
@@ -229,13 +235,7 @@ jobs:
           name: Run migrations
           command: |
             npm install
-            npm run migrations >> db_success.txt
-            
-            
-
-
-
-            
+            npm run migrations >> db_success.txt      
       - run:
           name: Send migration results to memstash
           command: |
@@ -280,7 +280,9 @@ jobs:
               cd frontend
               aws s3 cp ./dist/ s3://udapeople-u15ch1136f/ --recursive
             # your code here
-      # Here's where you will add some code to rollback on failure      
+      # Here's where you will add some code to rollback on failure   
+      - destroy-environment:
+          when: on_fail   
                     
   deploy-backend:
     docker:
@@ -305,8 +307,12 @@ jobs:
       - run:
           name: Deploy backend
           command: |
+          ansible-playbook -i inventory.txt deploy-backend.yml
+
             # your code here
       # Here's where you will add some code to rollback on failure  
+      - destroy-environment:
+          when: on_fail
 
   smoke-test:
     docker:
@@ -351,6 +357,8 @@ jobs:
             else
             return 0
             fi
+      - destroy-environment:
+          when: on_fail
 
       # Here's where you will add some code to rollback on failure  
 
@@ -367,26 +375,37 @@ jobs:
       - run:
           name: Update cloudfront distribution
           command: |
+               aws cloudformation deploy \
+              --template-file .circleci/files/cloudfront.yml \
+              --tags project=udacity-cloudfront \
+              --stack-name green_deployment \
+              --parameter-overrides WorkflowID=u15ch1136f 
             # your code here
+      - destroy-environment:
+          when: on_fail
       # Here's where you will add some code to rollback on failure  
 
   cleanup:
       docker:
-        - image: circleci/node:13.8.0
+        - image: amazon/aws-cli
       steps:
+        - checkout
         # Checkout code from git
         - run:
             name: Get old stack workflow id
             command: |
               # your code here
-              export OldWorkflowID="the id here"
-              export STACKS=[] #put the list of stacks here
-        - run:
+              export OldWorkflowID=$(aws cloudformation \
+              list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+              --no-paginate --output text)
+              export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
+    --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
             name: Remove old stacks and files
             command: |
               if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
               then
-                # your code here
+                aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
+                aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
               fi
             
 
