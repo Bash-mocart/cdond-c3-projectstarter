@@ -163,7 +163,7 @@ jobs:
     steps:
       - checkout
       # Checkout code from git
-      - run: yum install tar
+      - run: sudo yum install tar
       - run:
           name: Ensure back-end infrastructure exists
           command: |
