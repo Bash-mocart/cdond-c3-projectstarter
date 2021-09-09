@@ -237,14 +237,7 @@ jobs:
       - run:
           name: Send migration results to memstash
           command: |
-              if [ grep SUCCESS = 1 migrationsucess.txt ]
-              then
-                  curl -H "Content-Type: text/plain" -H "token: 46bbfdbc-6e4a-4446-9faa-56a5c2058c33" --request PUT --data "0" https://api.memstash.io/values/SUCCESS
-              else
-
-
-            # Your code here
-      - revert-migrations:
+              
 
      # Here's where you will add some code to rollback on failure      
 
