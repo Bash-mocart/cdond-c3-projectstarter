@@ -380,7 +380,7 @@ jobs:
       - run:
           name: Update cloudfront distribution
           command: |
-               aws cloudformation deploy \
+              aws cloudformation deploy \
               --template-file .circleci/files/cloudfront.yml \
               --tags project=udacity-cloudfront \
               --stack-name green_deployment \
