@@ -228,7 +228,8 @@ jobs:
           name: Run migrations
           command: |
             npm install
-            npm run migrations
+            npm run migrations >> db_success
+            
             
 
 
@@ -237,7 +238,10 @@ jobs:
       - run:
           name: Send migration results to memstash
           command: |
-              
+              if [[ grep has been executed successfully db_success ]]
+              then
+                  curl -H "Content-Type: text/plain" -H "token: 46bbfdbc-6e4a-4446-9faa-56a5c2058c33" --request PUT --data "" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID}
+            
 
      # Here's where you will add some code to rollback on failure      
 
@@ -247,19 +251,26 @@ jobs:
       # Docker image here that supports AWS CLI
     steps:
       # Checkout code from git
+      - checkout
+      - attach_workspace:
+        at: ~/
       - run:
           name: Install dependencies
           command: |
-            # your code here
+            npm install
+
       - run:
           name: Get backend url
           command: |
             # your code here
-            export API_URL="http://${BACKEND_IP}:3030"
+            export API_URL="http://${cat inventory.txt}:3030"
             echo "${API_URL}"
+            npm build
       - run:
           name: Deploy frontend objects
           command: |
+              cd frontend
+              aws s3 cp .dist/ s3://udapeople-u15ch1136f/ --recursive
             # your code here
       # Here's where you will add some code to rollback on failure      
                     
@@ -269,11 +280,19 @@ jobs:
       # Docker image here that supports Ansible
     steps:
       # Checkout code from git
+      - checkout
       # Add ssh keys with fingerprint
+      - add_ssh_keys:
+          fingerprints: ["8d:2a:24:bc:9d:3f:a4:0b:51:09:bd:9d:e0:53:25:57"]
+
       # attach workspace
+      - attach_workspace:
+        at: ~/
+
       - run:
           name: Install dependencies
           command: |
+            apk add --update ansible 
             # your code here
       - run:
           name: Deploy backend
