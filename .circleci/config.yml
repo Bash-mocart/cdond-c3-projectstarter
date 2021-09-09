@@ -26,9 +26,11 @@ commands:
             SUCCESS = 1
             if(( $SUCCESS==1 )); 
             then
-            #  cd ~/project/backend
-            #  npm install
+              cd ~/project/backend
+              npm install
+              npm run migrations:revert
             #  Add revert code here. You can find this in the Getting Started section.
+            
             ss  exit 1
             fi
             
@@ -44,11 +46,12 @@ jobs:
           name: Build front-end
           command: |
             cd frontend
+            npm run me
+            echo ip >> two.txt
             npm i
             npm run lint
             npm run build
-            cd dist
-            ls
+
            
       - save_cache:
           paths: [frontend/node_modules]
@@ -68,8 +71,7 @@ jobs:
             npm i
             npm run lint
             npm run build
-            cd dist
-            ls
+            
       
       - save_cache:
           paths: [backend/node_modules]
@@ -213,7 +215,7 @@ jobs:
       - run:
           name: Configure server
           command: |
-            ansible-playbook configure-server.yml
+            ansible-playbook -i inventory.txt configure-server.yml
             
             
       # Here's where you will add some code to rollback on failure      
@@ -230,13 +232,20 @@ jobs:
           command: |
             npm install
             npm run migrations
+            echo migration successfull >> migrationsuccess.txt
+
+
 
             
       - run:
           name: Send migration results to memstash
           command: |
+              curl -H "Content-Type: text/plain" -H "token: 46bbfdbc-6e4a-4446-9faa-56a5c2058c33" --request PUT --data "0" https://api.memstash.io/values/SUCCESS
             # Your code here
-            exit 1
+
+      - revert-migrations:
+          when: on_fail
+
      # Here's where you will add some code to rollback on failure      
 
   deploy-frontend:
