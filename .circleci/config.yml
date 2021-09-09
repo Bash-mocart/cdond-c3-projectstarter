@@ -46,8 +46,6 @@ jobs:
           name: Build front-end
           command: |
             cd frontend
-            npm run me
-            echo ip >> two.txt
             npm i
             npm run lint
             npm run build
@@ -205,7 +203,6 @@ jobs:
           fingerprints: ["8d:2a:24:bc:9d:3f:a4:0b:51:09:bd:9d:e0:53:25:57"]
       # Add ssh keys with fingerprint
       # attach workspace
-
       - attach_workspace:
           at: ~/
       - run:
@@ -230,15 +227,26 @@ jobs:
       - run:
           name: Run migrations
           command: |
-                  
+            npm install
+            npm run migrations
+            
+
+
+
+            
       - run:
           name: Send migration results to memstash
           command: |
+          if [ grep SUCCESS = 1 migrationsucess.txt ]
+          then
               curl -H "Content-Type: text/plain" -H "token: 46bbfdbc-6e4a-4446-9faa-56a5c2058c33" --request PUT --data "0" https://api.memstash.io/values/SUCCESS
+          else
+
+
             # Your code here
 
-     # - revert-migrations:
-       #   when: on_fail
+      - revert-migrations:
+          when: on_fail
 
      # Here's where you will add some code to rollback on failure      
 
@@ -359,7 +367,7 @@ workflows:
           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
           filters:
             branches:
-              only: [test-project-branch]
+              only: [master]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
       - run-migrations:
