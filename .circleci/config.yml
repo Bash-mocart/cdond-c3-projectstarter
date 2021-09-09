@@ -195,7 +195,7 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      - destroy-environment:
+      - destroy-environment
         
   
 
@@ -220,7 +220,7 @@ jobs:
           name: Configure server
           command: |
             ansible-playbook -i inventory.txt configure-server.yml
-      - destroy-environment:
+      - destroy-environment
           
             
             
@@ -285,7 +285,7 @@ jobs:
               aws s3 cp ./dist/ s3://udapeople-u15ch1136f/ --recursive
             # your code here
       # Here's where you will add some code to rollback on failure   
-      - destroy-environment:
+      - destroy-environment
             
                     
   deploy-backend:
@@ -315,7 +315,7 @@ jobs:
 
             # your code here
       # Here's where you will add some code to rollback on failure  
-      - destroy-environment:
+      - destroy-environment
           
 
   smoke-test:
@@ -362,7 +362,7 @@ jobs:
             else
             return 0
             fi
-      - destroy-environment:
+      - destroy-environment
           
 
       # Here's where you will add some code to rollback on failure  
@@ -388,7 +388,7 @@ jobs:
               --stack-name green_deployment \
               --parameter-overrides WorkflowID=u15ch1136f 
             # your code here
-      - destroy-environment:
+      - destroy-environment
           
       # Here's where you will add some code to rollback on failure  
 
