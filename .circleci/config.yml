@@ -163,29 +163,34 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
-              #--tags project=your-tag \
-              # --stack-name "your back-end stack name with workflow id" \
-              # --parameter-overrides ID="your workflow id"  
-              exit 1
+              --tags project=udacity-backend \
+              --stack-name "backendu15ch1136b" \
+              --parameter-overrides ID="u15ch1136b"  
+              
       - run:
           name: Ensure front-end infrastructure exist
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/frontend.yml \
-              #--tags project=your-tag \
-              # --stack-name "your front-end stack name with workflow id" \
-              # --parameter-overrides ID="your workflow id"  
-              exit 1
+              --tags project=udacity-frontend \
+              --stack-name "frontendu15ch1136f" \
+              --parameter-overrides ID="u15ch1136f"  
+      
       - run:
           name: Add back-end ip to ansible inventory
           command: |
-            # Your code here
-            exit 1
+            aws ec2 describe-instances \
+              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --filters "Name=tag:project,Values=udacity-backend" \
+              --output text >> inventory.txt
+              curl -H "Content-Type: text/plain" -H "token: 46bbfdbc-6e4a-4446-9faa-56a5c2058c33" --request PUT --data $(cat inventory.txt) https://api.memstash.io/values/backend
+            
+           
       - persist_to_workspace:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      # Here's where you will add some code to rollback on failure      
+  
 
   configure-infrastructure:
     docker:
@@ -195,19 +200,22 @@ jobs:
       - checkout
       # Checkout code from git
       - add_ssh_keys:
-          fingerprints: ["0c:55:f7:d7:ad:e3:73:19:0b:e6:c6:46:5c:04:76:94"]
+          fingerprints: ["8d:2a:24:bc:9d:3f:a4:0b:51:09:bd:9d:e0:53:25:57"]
       # Add ssh keys with fingerprint
       # attach workspace
+
+      - attach_workspace:
+          at: ~/
       - run:
           name: Install dependencies
           command: |
-            # Your code here
             apk add --update ansible 
       - run:
           name: Configure server
           command: |
-            # Your code here
-            exit 1
+            ansible-playbook configure-server.yml
+            
+            
       # Here's where you will add some code to rollback on failure      
 
   run-migrations:
@@ -215,12 +223,15 @@ jobs:
       - image: circleci/node:13.8.0
       # Docker image here that supports NodeJS
     steps:
+      - checkout
       # Checkout code from git
       - run:
           name: Run migrations
           command: |
-            # Your code here
-            exit 1
+            npm install
+            npm run migrations
+
+            
       - run:
           name: Send migration results to memstash
           command: |
@@ -345,7 +356,7 @@ workflows:
           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
           filters:
             branches:
-              only: [test-feature-branch]
+              only: [master]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
       - run-migrations:
