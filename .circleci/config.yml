@@ -323,6 +323,7 @@ jobs:
       - image: alphine:latest
       # Lightweight Docker image 
     steps:
+      - checkout
       # Checkout code from git
       - run:
           name: Install dependencies
@@ -371,6 +372,7 @@ jobs:
       - image: amazon/aws-cli
       # Docker image here that supports AWS CLI
     steps:
+      - checkout
       # Checkout code from git
       - run:
           name: Install dependencies
