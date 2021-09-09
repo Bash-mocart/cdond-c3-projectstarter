@@ -10,7 +10,7 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-            aws s3 rm s3://mybucket --recursive
+            aws s3 rm s3://udapeople-u15ch1136f --recursive
             aws cloudformation delete-stack \
             --stack-name backendu15ch1136b
             aws cloudformation delete-stack \
