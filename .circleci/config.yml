@@ -23,7 +23,8 @@ commands:
           # Add when this will run
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-            SUCCESS = 1
+            SUCCESS = curl -H "token: 46bbfdbc-6e4a-4446-9faa-56a5c2058c33" --request GET https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID}
+            # SUCCESS = 1
             if(( $SUCCESS==1 )); 
             then
               cd ~/project/backend
@@ -182,9 +183,9 @@ jobs:
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udacity-backend" \
-              --output text >> inventory.txt
-              curl -H "Content-Type: text/plain" -H "token: 46bbfdbc-6e4a-4446-9faa-56a5c2058c33" --request PUT --data $(cat inventory.txt) https://api.memstash.io/values/backend
-            
+              --output text >> backend_url.txt
+              curl -H "Content-Type: text/plain" -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request PUT --data $(cat backend_url.txt) https://api.memstash.io/values/backend
+              curl -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request GET https://api.memstash.io/values/backend >> .circleci/ansible/inventory.txts
            
       - persist_to_workspace:
           root: ~/
@@ -228,7 +229,7 @@ jobs:
           name: Run migrations
           command: |
             npm install
-            npm run migrations >> db_success
+            npm run migrations >> db_success.txt
             
             
 
@@ -238,11 +239,12 @@ jobs:
       - run:
           name: Send migration results to memstash
           command: |
-              if [[ grep has been executed successfully db_success ]]
+              if [[ grep has been executed successfully db_success.txt ]]
               then
-                  curl -H "Content-Type: text/plain" -H "token: 46bbfdbc-6e4a-4446-9faa-56a5c2058c33" --request PUT --data "" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID}
-            
-
+                  curl -H "Content-Type: text/plain" -H "token: 46bbfdbc-6e4a-4446-9faa-56a5c2058c33" --request PUT --data "0" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID}
+              else
+                  curl -H "Content-Type: text/plain" -H "token: 46bbfdbc-6e4a-4446-9faa-56a5c2058c33" --request PUT --data "1" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID}
+              fi
      # Here's where you will add some code to rollback on failure      
 
   deploy-frontend:
@@ -263,14 +265,20 @@ jobs:
           name: Get backend url
           command: |
             # your code here
-            export API_URL="http://${cat inventory.txt}:3030"
-            echo "${API_URL}"
+            cd backend
+
+            export API_URL= "http://${curl -H "token: 46bbfdbc-6e4a-4446-9faa-56a5c2058c33" --request GET https://api.memstash.io/values/backend}:3030"
+            echo ${API_URL} >> backendurl.txt
             npm build
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/backend/backendurl.txt
       - run:
           name: Deploy frontend objects
           command: |
               cd frontend
-              aws s3 cp .dist/ s3://udapeople-u15ch1136f/ --recursive
+              aws s3 cp ./dist/ s3://udapeople-u15ch1136f/ --recursive
             # your code here
       # Here's where you will add some code to rollback on failure      
                     
@@ -302,26 +310,48 @@ jobs:
 
   smoke-test:
     docker:
-      - image: circleci/node:13.8.0
+      - image: alphine:latest
       # Lightweight Docker image 
     steps:
       # Checkout code from git
       - run:
           name: Install dependencies
           command: |
+            sudo apt update
+            sudo apt upgrade
+            sudo apt install curl
             # your code here
+
+      - attach_workspace:
+          at: ~/
+
       - run:
           name: Get backend url
           command: |
-            # your code here
+            export BACKEND = cat backendurl.txt
       - run:
           name: Backend smoke test.
           command: |
+            if curl -s --head "${BACKEND}/api/status"
+            then
+            return 0
+            else
+            return 1
+            fi
+
             # your code here
       - run:
           name: Frontend smoke test.
           command: |
             # your code here
+            URL="http://udapeople-u15ch1136f.s3-website-us-east-1.amazonaws.com"
+            if curl -s ${URL} | grep "Welcome"
+            then
+            return 1
+            else
+            return 0
+            fi
+
       # Here's where you will add some code to rollback on failure  
 
   cloudfront-update:
