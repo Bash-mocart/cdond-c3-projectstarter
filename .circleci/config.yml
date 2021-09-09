@@ -50,10 +50,10 @@ jobs:
       - run:
           name: Build front-end
           command: |
-            cd frontend
-            npm i
-            npm run lint
-            npm run build
+                cd frontend
+                npm i
+                npm run lint
+                npm run build
 
            
       - save_cache:
@@ -404,7 +404,7 @@ jobs:
               list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
               --no-paginate --output text)
               export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
-    --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
+              --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
             name: Remove old stacks and files
             command: |
               if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
