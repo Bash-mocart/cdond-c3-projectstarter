@@ -196,7 +196,7 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
       - destroy-environment:
-          when: on_fail
+        
   
 
   configure-infrastructure:
@@ -221,7 +221,7 @@ jobs:
           command: |
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment:
-          when: on_fail
+          
             
             
       # Here's where you will add some code to rollback on failure      
@@ -286,7 +286,7 @@ jobs:
             # your code here
       # Here's where you will add some code to rollback on failure   
       - destroy-environment:
-          when: on_fail   
+            
                     
   deploy-backend:
     docker:
@@ -316,7 +316,7 @@ jobs:
             # your code here
       # Here's where you will add some code to rollback on failure  
       - destroy-environment:
-          when: on_fail
+          
 
   smoke-test:
     docker:
@@ -362,7 +362,7 @@ jobs:
             return 0
             fi
       - destroy-environment:
-          when: on_fail
+          
 
       # Here's where you will add some code to rollback on failure  
 
@@ -387,7 +387,7 @@ jobs:
               --parameter-overrides WorkflowID=u15ch1136f 
             # your code here
       - destroy-environment:
-          when: on_fail
+          
       # Here's where you will add some code to rollback on failure  
 
   cleanup:
