@@ -225,7 +225,7 @@ jobs:
            # apk upgrade
            # apk add curl
            # apk add ansible
-           # add flatpak
+           # add flatpak stackoverflow read more
            # curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
            # unzip awscliv2.zip
            # flatpak run ./aws/install
@@ -235,7 +235,7 @@ jobs:
       - run:
           name: Configure server
           command: |
-              ansible-playbook -i .circle/ansible/inventory.txt .circle/ansible/configure-server.yml
+             ansible-playbook configure-server.yml -i inventory.txt
       - destroy-environment
           
             
