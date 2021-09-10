@@ -225,7 +225,7 @@ jobs:
       - run:
           name: Configure server
           command: |
-            ansible-playbook -i inventory.txt configure-server.yml
+            ansible-playbook -i .cirrcle/ansible/inventory.txt .cirrcle/ansible/configure-server.yml
       - destroy-environment
           
             
