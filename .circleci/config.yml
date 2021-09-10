@@ -195,7 +195,7 @@ jobs:
               --filters "Name=tag:project,Values=udacity-backend" \
               --output text >> backend_url.txt
               curl -H "Content-Type: text/plain" -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request PUT --data $(cat backend_url.txt) https://api.memstash.io/values/backend
-              curl -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request GET https://api.memstash.io/values/backend >> .circleci/ansible/inventory.txts
+              curl -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request GET https://api.memstash.io/values/backend >> .circleci/ansible/inventory.txt
            
       - persist_to_workspace:
           root: ~/
