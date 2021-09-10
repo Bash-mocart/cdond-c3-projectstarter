@@ -231,7 +231,7 @@ jobs:
            # flatpak run ./aws/install
            pip install --upgrade pip
            pip install awscli
-           apk add ansibles
+           apk add ansible
       - run:
           name: Configure server
           command: |
