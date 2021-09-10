@@ -74,8 +74,6 @@ jobs:
             npm i
             npm run lint
             npm run build
-            
-      
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
@@ -155,6 +153,9 @@ jobs:
             npm i
             npm audit fix --audit-level=critical --force
       # Your job code here
+      - save_cache:
+          paths: [backend/node_modules]
+          key: backend-build
 
   deploy-infrastructure:
     docker:
@@ -238,9 +239,7 @@ jobs:
             cd .circleci/ansible/
             ansible-playbook configure-server.yml -i inventory.txt
       - destroy-environment
-          
-            
-            
+
       # Here's where you will add some code to rollback on failure      
 
   run-migrations:
@@ -250,6 +249,8 @@ jobs:
     steps:
       - checkout
       # Checkout code from git
+      - restore_cache:
+          keys: [backend-build]
       - run:
           name: Run migrations
           command: |

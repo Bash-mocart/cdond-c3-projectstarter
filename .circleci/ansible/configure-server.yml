@@ -1,6 +1,5 @@
 ---
 
-
 - name: "configuration play." 
   hosts: web
   user: ubuntu
@@ -23,5 +22,15 @@
   roles:
     - configure-server
     # Your code here
+
+  environment:
+    ENVIRONMENT: production
+    TYPEORM_CONNECTION: postgres
+    TYPEORM_ENTITIES: ./src/modules/domain/**/*.entity.ts
+    TYPEORM_HOST: postgresql.cmeqg2gl1b03.us-east-1.rds.amazonaws.com
+    TYPEORM_PORT: 5432 
+    TYPEORM_USERNAME: postgres
+    TYPEORM_PASSWORD: u15ch1136
+    TYPEORM_DATABASE: postgresql
 
  
