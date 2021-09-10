@@ -13,7 +13,7 @@
 
 - name: "Installing Git"
   become: true
-   apt:
+  apt:
     name: git
     state: latest
     update_cache: yes
