@@ -221,13 +221,15 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk update
-            apk upgrade
-            apk add curl
-            apk add ansible
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            ./aws/install
+           # apk update
+           # apk upgrade
+           # apk add curl
+           # apk add ansible
+           # add flatpak
+           # curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+           # unzip awscliv2.zip
+           # flatpak run ./aws/install
+           -m pip install awscli
       - run:
           name: Configure server
           command: |
