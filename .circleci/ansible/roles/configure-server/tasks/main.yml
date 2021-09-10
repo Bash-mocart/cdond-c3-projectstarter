@@ -11,13 +11,6 @@
     state: latest
     update_cache: yes
 
-- name: "Installing Git"
-  become: true
-  apt:
-    name: git
-    state: latest
-    update_cache: yes
-
 - name: "install pm2"
   become: true
   npm:
