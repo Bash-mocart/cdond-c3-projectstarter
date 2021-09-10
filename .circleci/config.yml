@@ -229,7 +229,9 @@ jobs:
            # curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
            # unzip awscliv2.zip
            # flatpak run ./aws/install
+           pip install --upgrade pip
            pip install awscli
+           pip install ansible
       - run:
           name: Configure server
           command: |
