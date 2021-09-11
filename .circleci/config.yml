@@ -15,12 +15,12 @@ commands:
           command: |
               input=$<<parameters.to>>
 
-              if (( $input == s3f ))  
+              if [ $input == s3f ]   
               then
                 aws s3 rm s3://udapeople-u15ch1136f --recursive
                 aws cloudformation delete-stack \
                 --stack-name frontendu15ch1136f
-              elif (( $input == backend ))
+              elif [ $input == backend ]
               then
                 aws cloudformation delete-stack \
                   --stack-name backendu15ch1136b
@@ -318,18 +318,18 @@ jobs:
             # your code here
             URL=$(curl -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request GET https://api.memstash.io/values/backend)
             export API_URL="http://${URL}:3030"
-            echo ${API_URL} >> backend/backendurl.txt
+            echo ${API_URL} >> backendurl.txt
             
       - persist_to_workspace:
           root: ~/
           paths:
-            - backend/backendurl.txt
+            - backendurl.txt
       - run:
           name: Deploy frontend objects
           command: |
               cd frontend
               npm install
-              npm build
+              npm run build
               aws s3 cp ./dist/ s3://udapeople-u15ch1136f/ --recursive
             # your code here
       # Here's where you will add some code to rollback on failure   
@@ -366,7 +366,7 @@ jobs:
               cd backend
               apk add --update nodejs npm
               apk add --update npm
-              npm build
+              npm run build
               cp dist/* .circleci/ansible/roles/deploy/files/dist
               cd .circleci/ansible/
               ansible-playbook deploy-backend.yml -i inventory.txt 
