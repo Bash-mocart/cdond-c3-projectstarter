@@ -379,7 +379,8 @@ jobs:
               apk add --update npm
               npm install
               npm run build
-              apk add zip 
+              #apk add zip 
+              pip install zip
               zip -r dist.zip dist
               echo dist is zipped
               cd
