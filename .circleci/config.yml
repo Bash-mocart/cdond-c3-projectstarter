@@ -13,12 +13,13 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-              if (( <<parameters.to>> == "aws s3f" ));
+
+              if (( <<parameters.to>> == "s3f" ));
               then
                 aws s3 rm s3://udapeople-u15ch1136f --recursive
                 aws cloudformation delete-stack \
                 --stack-name frontendu15ch1136f
-              elif (( <<parameters.to>> == "aws backend" ));
+              elif (( <<parameters.to>> == "backend" ));
               then
                 aws cloudformation delete-stack \
                   --stack-name backendu15ch1136b
@@ -332,7 +333,7 @@ jobs:
             # your code here
       # Here's where you will add some code to rollback on failure   
       - destroy-environment:
-          to: "aws s3f"
+          to: "s3f"
             
                     
   deploy-backend:
@@ -366,7 +367,7 @@ jobs:
             # your code here
       # Here's where you will add some code to rollback on failure  
       - destroy-environment:
-          to: "aws backend"
+          to: "backend"
           
 
   smoke-test:
