@@ -13,13 +13,14 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
+              input = echo $<<parameters.to>>
 
-              if (( <<parameters.to>> == s3f ))
+              if (( $input == s3f ))
               then
                 aws s3 rm s3://udapeople-u15ch1136f --recursive
                 aws cloudformation delete-stack \
                 --stack-name frontendu15ch1136f
-              elif (( <<parameters.to>> == backend ))
+              elif (( $input == backend ))
               then
                 aws cloudformation delete-stack \
                   --stack-name backendu15ch1136b
@@ -315,7 +316,6 @@ jobs:
           name: Get backend url
           command: |
             # your code here
-            cd backend
             URL = echo ${curl -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request GET https://api.memstash.io/values/backend}
             export API_URL= "http://${URL}:3030"
             echo ${API_URL} >> backendurl.txt
@@ -362,6 +362,9 @@ jobs:
       - run:
           name: Deploy backend
           command: |
+              mkdir -p .circleci/ansible/roles/deploy/files/dist
+              cd .circleci/backend/
+              cp ./dist/* .circleci/ansible/roles/deploy/files/dist
               cd .circleci/ansible/
               ansible-playbook deploy-backend.yml -i inventory.txt 
 

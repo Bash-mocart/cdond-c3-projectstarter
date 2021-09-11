@@ -1,8 +1,15 @@
 ---
-- name: copy files from ./dist folder to remote host
-  copy:
-    src: /root/project/backend/./dist
-    dest: /backend/
+- name: Creates directory
+  file:
+    path: ~/backend
+    state: directory
+
+- name: Copy index test page
+  template:
+    src: "files/dist/"
+    dest: "~/backend"
+
+
 
 
      
