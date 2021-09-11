@@ -293,6 +293,7 @@ jobs:
           name: Install dependencies
           command: |
               yum -y install tar
+              yum -y install gzip
               npm install
       - run:
           name: Get backend url
@@ -343,7 +344,7 @@ jobs:
           name: Deploy backend
           command: |
               cd backend
-              ansible-playbook -i inventory.txt deploy-backend.yml
+              ansible-playbook deploy-backend.yml -i inventory.txt 
 
             # your code here
       # Here's where you will add some code to rollback on failure  
