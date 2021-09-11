@@ -316,7 +316,7 @@ jobs:
           command: |
             # your code here
             cd backend
-            export API_URL= echo "http://${curl -H "token: 46bbfdbc-6e4a-4446-9faa-56a5c2058c33" --request GET https://api.memstash.io/values/backend}:3030"
+            export API_URL= eval "http://${curl -H "token: 46bbfdbc-6e4a-4446-9faa-56a5c2058c33" --request GET https://api.memstash.io/values/backend}:3030"
             echo ${API_URL} >> backendurl.txt
             
       - persist_to_workspace:
