@@ -13,7 +13,7 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-              input=echo $<<parameters.to>>
+              input=$<<parameters.to>>
 
               if (( $input == s3f ))  
               then
