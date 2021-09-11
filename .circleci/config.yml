@@ -332,7 +332,7 @@ jobs:
               aws s3 cp ./dist/ s3://udapeople-u15ch1136f/ --recursive
             # your code here
       # Here's where you will add some code to rollback on failure   
-      - destroy-environment
+      - destroy-environment:
           to: "aws s3f"
             
                     
@@ -366,7 +366,7 @@ jobs:
 
             # your code here
       # Here's where you will add some code to rollback on failure  
-      - destroy-environment
+      - destroy-environment:
           to: "aws backend"
           
 
