@@ -387,9 +387,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt update
-            sudo apt upgrade
-            sudo apt install curl
+             apt update
+             apt upgrade
+             apt install curl
             # your code here
 
       - attach_workspace:
