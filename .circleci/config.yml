@@ -13,15 +13,15 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-              if (( <<parameters.to>>==aws s3f ))
+              if (( <<parameters.to>>==aws s3f ));
               then
                 aws s3 rm s3://udapeople-u15ch1136f --recursive
                 aws cloudformation delete-stack \
                 --stack-name frontendu15ch1136f
-              elif (( <<parameters.to>>==aws backend ))
+              elif (( <<parameters.to>>==aws backend ));
               then
-               aws cloudformation delete-stack \
-                --stack-name backendu15ch1136b
+                aws cloudformation delete-stack \
+                  --stack-name backendu15ch1136b
               else 
                 aws s3 rm s3://udapeople-u15ch1136f --recursive
                 aws cloudformation delete-stack \
@@ -361,7 +361,7 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-              cd backend
+              cd ansible
               ansible-playbook deploy-backend.yml -i inventory.txt 
 
             # your code here
