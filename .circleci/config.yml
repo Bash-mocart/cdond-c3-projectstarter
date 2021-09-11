@@ -318,12 +318,12 @@ jobs:
             # your code here
             URL=$(curl -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request GET https://api.memstash.io/values/backend)
             export API_URL="http://${URL}:3030"
-            echo ${API_URL} >> backendurl.txt
+            echo ${API_URL} >> backend/backendurl.txt
             
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/backend/backendurl.txt
+            - backend/backendurl.txt
       - run:
           name: Deploy frontend objects
           command: |
@@ -367,7 +367,7 @@ jobs:
               apk add --update nodejs npm
               apk add --update npm
               npm build
-              cp ./dist/* .circleci/ansible/roles/deploy/files/dist
+              cp dist/* .circleci/ansible/roles/deploy/files/dist
               cd .circleci/ansible/
               ansible-playbook deploy-backend.yml -i inventory.txt 
 
