@@ -316,7 +316,7 @@ jobs:
           command: |
             # your code here
             cd backend
-            URL = echo ${curl -H "token: 46bbfdbc-6e4a-4446-9faa-56a5c2058c33" --request GET https://api.memstash.io/values/backend}
+            URL = echo ${curl -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request GET https://api.memstash.io/values/backend}
             export API_URL= "http://${URL}:3030"
             echo ${API_URL} >> backendurl.txt
             
