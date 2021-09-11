@@ -330,6 +330,7 @@ jobs:
           name: Deploy frontend objects
           command: |
               cd frontend
+              yum -y install nodejs npm
               npm install
               npm run build
               aws s3 cp ./dist/ s3://udapeople-u15ch1136f/ --recursive
@@ -364,8 +365,6 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-              ls
-
               cd .circleci/ansible/roles/deploy
               mkdir files
               cd files
@@ -373,7 +372,7 @@ jobs:
               cd
               ls
               pwd
-              cd backend
+              cd project/backend
               apk add --update nodejs-npm
               apk add --update npm
               npm install
