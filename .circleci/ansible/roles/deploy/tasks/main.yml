@@ -6,7 +6,7 @@
 
 - name: Copy dist
   template:
-    src: "files/dist/"
+    src: "dist.zip"
     dest: "~/backend"
 
 

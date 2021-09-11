@@ -373,15 +373,17 @@ jobs:
               cd files
               mkdir dist
               cd
-              ls
-              pwd
+              echo directory available
               cd project/backend
               apk add --update nodejs-npm
               apk add --update npm
               npm install
               npm run build
+              zip -r dist.zip dist
+              echo dist is zipped
               cd
-              cp -a project/backend/dist/. project/.circleci/ansible/roles/deploy/files/dist/
+              cp -a project/backend/dist.zip project/.circleci/ansible/roles/deploy/files/dist/
+              echo dist is moved
               cd project/.circleci/ansible/
               ansible-playbook deploy-backend.yml -i inventory.txt 
 
