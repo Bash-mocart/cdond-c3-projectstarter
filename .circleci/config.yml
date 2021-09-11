@@ -7,8 +7,6 @@ commands:
       to:
         default: "world"
         type: string
-      steps:
-      - run: echo "Hello <<parameters.to>>"
       # Add parameter here   
     steps:
       - run:
