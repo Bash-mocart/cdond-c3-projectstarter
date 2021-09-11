@@ -404,9 +404,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-             apt update
-             apt upgrade
-             apt install curl
+             #apt update
+             #apt upgrade
+             apk add curl
             # your code here
 
       - attach_workspace:
