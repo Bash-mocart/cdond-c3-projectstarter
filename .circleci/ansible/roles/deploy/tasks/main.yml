@@ -1,8 +1,8 @@
 ---
 - name: copy files from ./dist folder to remote host
   copy:
-    src: ./dist
-    dest: /
+    src: /root/project/backend/dist
+    dest: /backend/
 
 
      
