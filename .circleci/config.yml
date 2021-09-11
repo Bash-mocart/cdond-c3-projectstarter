@@ -13,7 +13,7 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-              input=$<<parameters.to>>
+              input=<<parameters.to>>
 
               if [ $input == s3f ]   
               then
@@ -323,7 +323,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - backendurl.txt
+            - /project/backendurl.txt
       - run:
           name: Deploy frontend objects
           command: |
@@ -364,8 +364,9 @@ jobs:
           command: |
               mkdir -p .circleci/ansible/roles/deploy/files/dist
               cd backend
-              apk add --update nodejs npm
+              apk add --update nodejs-npm
               apk add --update npm
+              npm install
               npm run build
               cp dist/* .circleci/ansible/roles/deploy/files/dist
               cd .circleci/ansible/
