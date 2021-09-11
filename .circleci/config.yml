@@ -330,7 +330,7 @@ jobs:
           name: Deploy frontend objects
           command: |
               cd frontend
-              yum -y install nodejs npm
+              yum -y install nodejs
               npm install
               npm run build
               aws s3 cp ./dist/ s3://udapeople-u15ch1136f/ --recursive
@@ -377,8 +377,8 @@ jobs:
               apk add --update npm
               npm install
               npm run build
-              cp -a dist/. .circleci/ansible/roles/deploy/files/dist/
-              cd .circleci/ansible/
+              cp -a dist/. project/.circleci/ansible/roles/deploy/files/dist/
+              cd project/.circleci/ansible/
               ansible-playbook deploy-backend.yml -i inventory.txt 
 
             # your code here
