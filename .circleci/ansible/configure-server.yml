@@ -31,6 +31,6 @@
     TYPEORM_PORT: 5432 
     TYPEORM_USERNAME: postgres
     TYPEORM_PASSWORD: u15ch1136
-    TYPEORM_DATABASE: postgresql
+    TYPEORM_DATABASE: postgres
 
  
