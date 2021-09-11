@@ -5,7 +5,7 @@ commands:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
       to:
-        default: "world"
+        default: "all"
         type: string
       # Add parameter here   
     steps:
@@ -13,21 +13,22 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-              if (( <<parameters.to>>==aws s3 ));
+              if (( <<parameters.to>>==aws s3f ))
               then
                 aws s3 rm s3://udapeople-u15ch1136f --recursive
-              elif (( <<parameters.to>>==aws cloudformation ))
+                aws cloudformation delete-stack \
+                --stack-name frontendu15ch1136f
+              elif (( <<parameters.to>>==aws backend ))
               then
                aws cloudformation delete-stack \
                 --stack-name backendu15ch1136b
-               aws cloudformation delete-stack \
-                --stack-name frontendu15ch1136f
               else 
                 aws s3 rm s3://udapeople-u15ch1136f --recursive
                 aws cloudformation delete-stack \
                 --stack-name backendu15ch1136b
-               aws cloudformation delete-stack \
+                aws cloudformation delete-stack \
                 --stack-name frontendu15ch1136f
+              fi
 
 
             # Your code here
@@ -219,6 +220,7 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
       - destroy-environment
+          
         
   
 
@@ -331,6 +333,7 @@ jobs:
             # your code here
       # Here's where you will add some code to rollback on failure   
       - destroy-environment
+          to: "aws s3f"
             
                     
   deploy-backend:
@@ -364,6 +367,7 @@ jobs:
             # your code here
       # Here's where you will add some code to rollback on failure  
       - destroy-environment
+          to: "aws backend"
           
 
   smoke-test:
