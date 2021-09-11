@@ -15,7 +15,7 @@ commands:
           command: |
               input=echo $<<parameters.to>>
 
-              if (($input == s3f))  
+              if (( $input == s3f ))  
               then
                 aws s3 rm s3://udapeople-u15ch1136f --recursive
                 aws cloudformation delete-stack \
