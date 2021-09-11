@@ -3,18 +3,35 @@ version: 2.1
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-    #parameters:
+    parameters:
+      to:
+        default: "world"
+        type: string
+      steps:
+      - run: echo "Hello <<parameters.to>>"
       # Add parameter here   
     steps:
       - run:
           name: Destroy environments
           when: on_fail
           command: |
-            aws s3 rm s3://udapeople-u15ch1136f --recursive
-            aws cloudformation delete-stack \
-            --stack-name backendu15ch1136b
-            aws cloudformation delete-stack \
-            --stack-name frontendu15ch1136f
+              if (( <<parameters.to>>==aws s3 ));
+              then
+                aws s3 rm s3://udapeople-u15ch1136f --recursive
+              elif (( <<parameters.to>>==aws cloudformation ))
+              then
+               aws cloudformation delete-stack \
+                --stack-name backendu15ch1136b
+               aws cloudformation delete-stack \
+                --stack-name frontendu15ch1136f
+              else 
+                aws s3 rm s3://udapeople-u15ch1136f --recursive
+                aws cloudformation delete-stack \
+                --stack-name backendu15ch1136b
+               aws cloudformation delete-stack \
+                --stack-name frontendu15ch1136f
+
+
             # Your code here
             
 
