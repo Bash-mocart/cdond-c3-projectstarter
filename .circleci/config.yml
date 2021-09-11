@@ -301,7 +301,7 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: amazon/aws-cli
+      - image: circleci/node:13.8.0
       # Docker image here that supports AWS CLI
     steps:
       # Checkout code from git
@@ -309,8 +309,12 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-              yum -y install tar
-              yum -y install gzip
+              sudo apt-get update && sudo apt-get install -yy less
+              curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+              unzip awscliv2.zip
+              sudo ./aws/install
+              
+              
               
       - run:
           name: Get backend url
@@ -330,7 +334,6 @@ jobs:
           name: Deploy frontend objects
           command: |
               cd frontend
-              yum -y install nodejs
               npm install
               npm run build
               aws s3 cp ./dist/ s3://udapeople-u15ch1136f/ --recursive
@@ -377,7 +380,8 @@ jobs:
               apk add --update npm
               npm install
               npm run build
-              cp -a dist/. project/.circleci/ansible/roles/deploy/files/dist/
+              cd
+              cp -a project/backend/dist/. project/.circleci/ansible/roles/deploy/files/dist/
               cd project/.circleci/ansible/
               ansible-playbook deploy-backend.yml -i inventory.txt 
 
