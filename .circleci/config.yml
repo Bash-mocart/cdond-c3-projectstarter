@@ -366,7 +366,7 @@ jobs:
           command: |
               ls
 
-              cd .cirlcleci/ansible/roles/deploy
+              cd .circleci/ansible/roles/deploy
               mkdir files
               cd files
               mkdir dist
