@@ -369,7 +369,7 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-              cd project/backend
+              cd backend
               apk add --update nodejs-npm
               apk add --update npm
               npm install
