@@ -19,7 +19,7 @@
   shell: |
       cd ~/backend
       ls 
-    register: shell_result
+  register: shell_result
 
 - name: "Unzip dist.zip"
   debug:
