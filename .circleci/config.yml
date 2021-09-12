@@ -382,9 +382,10 @@ jobs:
               npm run build
               #apk add zip 
               cd
-              cp -a project/backend/dist/. project/.circleci/ansible/roles/deploy/files/dist/
+              cp -a /project/backend/dist/. /project/.circleci/ansible/roles/deploy/files/dist/
               echo dist is moved
               cd project/.circleci/ansible/
+              ls /project/.circleci/ansible/roles/deploy/files/dist/
               ansible-playbook deploy-backend.yml -i inventory.txt 
 
             # your code here
