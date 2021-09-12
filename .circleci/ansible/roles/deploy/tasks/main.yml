@@ -15,10 +15,21 @@
     unzip dist.zip
     rm -rf dist.zip
 
+- name: "Unzip dist.zip"
+  shell: |
+      cd ~/backend
+      ls 
+    register: shell_result
+
+- name: "Unzip dist.zip"
+  debug:
+    var: shell_result.stdout_lines
+
 - name: "Install dependencies for project"
   shell: |
     cd ~/backend
     npm install
+
   
 - name: "Executing node"
   shell: |
