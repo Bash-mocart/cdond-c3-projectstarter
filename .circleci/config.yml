@@ -321,8 +321,8 @@ jobs:
           command: |
             # your code here
             URL=$(curl -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request GET https://api.memstash.io/values/backend)
-            export API_URL="http://${URL}:3030"
-            echo ${API_URL} >> util/backendurl.txt
+            export API_URL="http://${URL}:3030" 
+            curl -H "Content-Type: text/plain" -H "token: 7d785f18-ed4c-4b0a-b371-f672266ac661" --request PUT --data ${API_URL} https://api.memstash.io/values/backendurl
             pwd
             ls
             
@@ -413,7 +413,7 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            export BACKEND=${cat backendurl.txt}
+            export BACKEND=${curl -H "token: 7d785f18-ed4c-4b0a-b371-f672266ac661" --request GET https://api.memstash.io/values/backendurl}
       - run:
           name: Backend smoke test.
           command: |
