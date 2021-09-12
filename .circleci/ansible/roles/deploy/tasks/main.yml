@@ -6,14 +6,14 @@
 
 - name: Zip dist
   archive:
-    path: /project/.circleci/ansible/roles/deploy/files/dist/
-    dest:  /project/.circleci/ansible/roles/deploy/files/dist.zip
+    path: /project/backend/dist
+    dest:  /project/backend/dist.zip
     format: zip
 
 - name: Copy distss
   become: true
   copy:
-    src: "dist.zip"
+    src: "/project/backend/dist.zip"
     dest: "~/backend/dist.zip"
   
 - name: Unzip distss
