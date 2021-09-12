@@ -33,7 +33,7 @@
 - name: "Executing node"
   shell: |
     cd /home/ubuntu/backend
-    pm2 start main.js
+    pm2 start main.js -f
  
 - name: "PM2 autostart"
   shell: |
