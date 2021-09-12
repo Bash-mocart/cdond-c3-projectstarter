@@ -14,8 +14,12 @@
     cd ~/backend
     unzip dist.zip
     rm -rf dist.zip
-    ls
 
+- name: "Install dependencies for project"
+  shell: |
+    cd ~/backend
+    npm install
+  
 - name: "Executing node"
   shell: |
     cd ~/backend
