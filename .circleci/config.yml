@@ -392,7 +392,7 @@ jobs:
 
   smoke-test:
     docker:
-      - image: alphine:latest
+      - image: python:3.7-alpine3.11
       # Lightweight Docker image 
     steps:
       - checkout
@@ -402,7 +402,7 @@ jobs:
           command: |
              #apt update
              #apt upgrade
-             apk add curl
+             apk add --update curl
             # your code here
 
       - attach_workspace:
