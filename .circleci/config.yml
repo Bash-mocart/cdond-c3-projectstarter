@@ -369,24 +369,12 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-              cd .circleci/ansible/roles/deploy
-              mkdir files
-              cd files
-              pwd
-              mkdir dist
-              pwd
-              cd dist
-              cd
-              echo directory available
               cd project/backend
               apk add --update nodejs-npm
               apk add --update npm
               npm install
               npm run build
-              #apk add zip 
-              cd
-              cp -a project/backend/dist/. project/.circleci/ansible/roles/deploy/files/dist/
-              echo dist is moved
+              echo build successful
               cd project/.circleci/ansible/
               ansible-playbook deploy-backend.yml -i inventory.txt 
 
