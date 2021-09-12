@@ -6,7 +6,7 @@
 
 - name: Copy dist
   become: true
-  template:
+  copy:
     src:  project/.circleci/ansible/roles/deploy/files/dist/
     dest: ~/backend
 
