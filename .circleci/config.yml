@@ -363,8 +363,7 @@ jobs:
           command: |
             pip install --upgrade pip
             pip install awscli
-            apk add ansible
-            apt-get install zip
+            apk add ansibles
             pip install zip
             # your code here
       - run:
