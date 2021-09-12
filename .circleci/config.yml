@@ -361,10 +361,10 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            pip2 install --upgrade pip
+            pip install --upgrade pip
             pip install awscli
             apk add ansible
-            pip install zip
+            
             # your code here
       - run:
           name: Deploy backend
