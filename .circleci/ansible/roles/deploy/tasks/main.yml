@@ -13,8 +13,8 @@
 - name: Copy distss
   become: true
   copy:
-    src: dist.zip
-    dest: ~/backend/dist.zip
+    src: "files/dist.zip"
+    dest: "~/backend/dist.zip"
   
 - name: Unzip distss
   unarchive:
