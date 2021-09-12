@@ -8,7 +8,7 @@
 - name: Copy dist
   become: true
   copy:
-    src: "dist.zip"
+    src: dist.zip
     dest: "~/backend/dist.zip"
   
 - name: Unzip dists
