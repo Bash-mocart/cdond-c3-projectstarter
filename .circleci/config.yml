@@ -413,7 +413,7 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            export BACKEND=cat backend_url.txt
+            export BACKEND=${cat backendurl.txt}
       - run:
           name: Backend smoke test.
           command: |
