@@ -4,16 +4,11 @@
     path: ~/backend
     state: directory
 
-- name: Zip dist
-  archive:
-    path: /root/project/backend/dist
-    dest:  /root/project/backend/dist.zip
-    format: zip
 
 - name: Copy dist
   become: true
   copy:
-    src: "/root/project/backend/dist.zip"
+    src: "dist.zip"
     dest: "~/backend/dist.zip"
   
 - name: Unzip dists
