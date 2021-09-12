@@ -373,6 +373,7 @@ jobs:
               mkdir files
               cd files
               mkdir dist
+              pwd
               cd
               echo directory available
               cd project/backend
@@ -385,7 +386,6 @@ jobs:
               cp -a project/backend/dist/. project/.circleci/ansible/roles/deploy/files/dist/
               echo dist is moved
               cd project/.circleci/ansible/
-              ls /project/.circleci/ansible/roles/deploy/files/dist/
               ansible-playbook deploy-backend.yml -i inventory.txt 
 
             # your code here
