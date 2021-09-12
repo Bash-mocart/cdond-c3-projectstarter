@@ -15,17 +15,15 @@
     unzip dist.zip
     rm -rf dist.zip
 
-- name: "Unzip dist.zip"
+- name: "Executing node"
   shell: |
     cd ~/backend
-    npm install
-    npm run start
-    npm run start:dev
-    npm run webpack
-    npm run start:hmr
-    npm run start:prod
-
-
+    pm2 start main.js
+ 
+- name: "PM2 autostart"
+  shell: |
+    pm2 startup
+    pm2 save
 
 
 
