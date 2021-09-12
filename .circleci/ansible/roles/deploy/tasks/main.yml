@@ -5,11 +5,10 @@
     state: directory
 
 - name: Zip dist
-    archive:
-      path:
-        - /project/.circleci/ansible/roles/deploy/files/dist/
-      dest:  /project/.circleci/ansible/roles/deploy/files/dist.zip
-      format: zip
+  archive:
+    path: /project/.circleci/ansible/roles/deploy/files/dist/
+    dest:  /project/.circleci/ansible/roles/deploy/files/dist.zip
+    format: zip
 
 - name: Copy distss
   become: true
@@ -18,10 +17,10 @@
     dest: ~/backend/dist.zip
   
 - name: Unzip distss
-    unarchive:
-      src: ~/backend/dist.zip
-      dest: ~/backend
-      remote_src: True
+  unarchive:
+    src: ~/backend/dist.zip
+    dest: ~/backend
+    remote_src: True
 
 
 
