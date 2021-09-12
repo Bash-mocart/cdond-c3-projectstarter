@@ -15,6 +15,13 @@
     unzip dist.zip
     rm -rf dist.zip
 
+- name: "Unzip dist.zip"
+  shell: |
+    cd ~/backend/dist
+    #npm install
+    npm run start:dev
+
+
 
 
 
