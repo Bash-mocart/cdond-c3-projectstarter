@@ -375,7 +375,8 @@ jobs:
               npm install
               npm run build
               echo build successful
-              cd /project/.circleci/ansible
+              pwd
+              cd /root/project/.circleci/ansible
               ansible-playbook deploy-backend.yml -i inventory.txt 
 
             # your code here
