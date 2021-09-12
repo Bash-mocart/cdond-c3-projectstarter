@@ -3,8 +3,7 @@
   file:
     path: ~/backend
     state: directory
-
-
+    
 - name: Copy dist
   copy:
     src: dist.zip
