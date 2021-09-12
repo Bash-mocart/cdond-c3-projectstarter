@@ -372,8 +372,10 @@ jobs:
               cd .circleci/ansible/roles/deploy
               mkdir files
               cd files
+              pwd
               mkdir dist
               pwd
+              cd dist
               cd
               echo directory available
               cd project/backend
