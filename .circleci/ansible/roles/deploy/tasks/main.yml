@@ -6,7 +6,6 @@
 
 
 - name: Copy dist
-  become: true
   copy:
     src: dist.zip
     dest: "~/backend/dist.zip"
