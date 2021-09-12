@@ -411,7 +411,7 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            if curl -s --head "${BACKEND}/api/status"
+            if curl -s --head "${BACKEND}/api/status" | grep "Server"
             then
             return 0
             else
