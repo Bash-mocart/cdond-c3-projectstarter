@@ -371,9 +371,9 @@ jobs:
               npm run build
               echo build successful
               cd dist
-              zip -rq dist.zip *
+              tar czf dist.tar.gz .
               mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
-              mv dist.zip ~/project/.circleci/ansible/roles/deploy/files/
+              mv dist.tar.gz ~/project/.circleci/ansible/roles/deploy/files/
               pwd
               cd /root/project/.circleci/ansible
               ansible-playbook deploy-backend.yml -i inventory.txt 

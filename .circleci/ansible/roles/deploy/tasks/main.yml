@@ -6,13 +6,14 @@
 
 - name: Copy dist
   copy:
-    src: dist.zip
-    dest: "~/backend/dist.zip"
-  
-- name: "Unzip dist.zip"
-  shell: |
-    cd ~/backend
-    unzip dist.zip
+    src: dist.tar.gz
+    dest: "~/backend/dist.tar.gz"
+
+- name: Copy dist
+  unarchive:
+    src: ~/backend/dist.tar.gz
+    dest: ~/backend
+    remote_src: True
 
 - name: "Unzip dist.zip"
   shell: |
