@@ -13,7 +13,6 @@
   shell: |
     cd ~/backend
     unzip dist.zip
-    rm -rf dist.zip
 
 - name: "Unzip dist.zip"
   shell: |
@@ -33,8 +32,8 @@
   
 - name: "Executing node"
   shell: |
-    cd ~/backend
-    pm2 start main.js
+    cd /home/ubuntu/backend
+    pm2 start npm --name backend -- start
  
 - name: "PM2 autostart"
   shell: |
