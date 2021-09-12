@@ -364,6 +364,8 @@ jobs:
             pip install --upgrade pip
             pip install awscli
             apk add ansible
+            apt-get install zip
+            pip install zip
             # your code here
       - run:
           name: Deploy backend
@@ -380,7 +382,6 @@ jobs:
               npm install
               npm run build
               #apk add zip 
-              pip install zip
               zip -r dist.zip dist
               echo dist is zipped
               cd
