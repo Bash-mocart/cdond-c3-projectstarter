@@ -7,13 +7,13 @@
 - name: Zip dist
   archive:
     path: /root/project/backend/dist
-    dest:  /root/project/.circleci/ansible/roles/deploy/files/dist.zip
+    dest:  /root/project/backend/dist.zip
     format: zip
 
 - name: Copy dist
   become: true
   copy:
-    src: "dist.zip"
+    src: "/root/project/backend/dist.zip"
     dest: "~/backend/dist.zip"
   
 - name: Unzip dists
