@@ -9,26 +9,23 @@
       ls 
   register: shell_result
 
+- name: "installing dependencies"
+  shell: |
+      npm install
+      npm build
+  args:
+    chdir: /home/ubuntu
+
 - name: "Display as output"
   debug:
     var: shell_result.stdout_lines
     
-- name: stop backend service
-  become: yes
-  become_user: ubuntu
-  changed_when: false
-  ignore_errors: yes  
-  command: pm2 stop all
-
-#- name: "Install dependencies for project"
-  #shell: |
-    #cd ~/backend
    
-- name: "List processes"
+- name: "Start Application"
   shell: |      
       pm2 start npm --name backend -- run start
   args:
-    chdir: /home/ubuntu/backend
+    chdir: /home/ubuntu
 
 - name: "List processes"
   shell: |      
