@@ -32,11 +32,10 @@
   ignore_errors: yes  
   command: pm2 stop all
 
-- name: "Install dependencies for project"
-  shell: |
-    cd ~/backend
-    npm install
-  
+#- name: "Install dependencies for project"
+  #shell: |
+    #cd ~/backend
+   
 - name: "List processes"
   shell: |      
       cd ~/backend/dist
