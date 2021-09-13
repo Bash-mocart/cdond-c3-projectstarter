@@ -25,12 +25,13 @@
 
   environment:
     ENVIRONMENT: production
-    TYPEORM_CONNECTION: postgres
-    TYPEORM_ENTITIES: ./src/modules/domain/**/*.entity.ts
-    TYPEORM_HOST: postgresql.cmeqg2gl1b03.us-east-1.rds.amazonaws.com
-    TYPEORM_PORT: 5432 
-    TYPEORM_USERNAME: postgres
-    TYPEORM_PASSWORD: u15ch1136
-    TYPEORM_DATABASE: postgres
-
+    CIRCLE_WORKFLOW_ID: "{{ lookup('env','CIRCLE_WORKFLOW_ID') }}"
+    TYPEORM_MIGRATIONS: "{{ lookup('env','TYPEORM_MIGRATIONS') }}"
+    TYPEORM_ENTITIES: "{{ lookup('env','TYPEORM_ENTITIES') }}"
+    TYPEORM_CONNECTION: "{{ lookup('env','TYPEORM_CONNECTION') }}"
+    TYPEORM_HOST: "{{ lookup('env','TYPEORM_HOST') }}"
+    TYPEORM_PORT: "{{ lookup('env','TYPEORM_PORT') }}"
+    TYPEORM_USERNAME: "{{ lookup('env','TYPEORM_USERNAME') }}"
+    TYPEORM_PASSWORD: "{{ lookup('env','TYPEORM_PASSWORD') }}"
+    TYPEORM_DATABASE: "{{ lookup('env','TYPEORM_DATABASE') }}"
  

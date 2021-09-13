@@ -18,4 +18,9 @@
     global: yes
     production: yes
     state: present
+
+- name: "ensure the app runs at startup"
+  shell: test -e /etc/systemd/system/pm2-ubuntu.service || pm2 startup -u ubuntu
+  become: yes
+  changed_when: false
   
