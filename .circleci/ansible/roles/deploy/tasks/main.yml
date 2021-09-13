@@ -23,25 +23,27 @@
 
 - name: "Unzip dist.zip"
   debug:
-    var: shell_result.stdout_lines
+    var: shell_result.
+    
+- name: stop backend service
+  become: yes
+  become_user: ubuntu
+  changed_when: false
+  ignore_errors: yes  
+  command: pm2 delete all
+
 
 - name: "Install dependencies for project"
   shell: |
     cd ~/backend
     npm install
 
-- name: stop backend service
-  become: yes
-  become_user: ubuntu
-  changed_when: false
-  ignore_errors: yes  
-  command: pm2 stop backend
 
 - name: start backend service
   become: yes
   become_user: ubuntu
   changed_when: false
-  command: pm2 start --name backend npm -- start
+  command: pm2 start -f main.js
   args:
     chdir: ~/backend
  
