@@ -1,9 +1,4 @@
 ---
-- name: Upgrade npm
-  become: true
-  shell: |
-    npm install -g npm@latest
-
 - name: Unarchive Backend
   unarchive:
     src: /root/project/backend.tar.gz
@@ -28,20 +23,16 @@
 #- name: "Install dependencies for project"
   #shell: |
     #cd ~/backend
-
-- name: "npm run start"
-  shell: |      
-      npm run start
    
 - name: "List processes"
   shell: |      
-      cd ~/dist
-      pm2 start main.js -f
+      pm2 start npm --name backend -- run start
+  args:
+    chdir: /home/ubuntu/backend
 
 - name: "List processes"
   shell: |      
       pm2 list
-      return 1
   register: pm2_result
 
 - name: "Print in the debug console"
