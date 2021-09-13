@@ -45,10 +45,7 @@
   args:
     chdir: ~/backend
  
-- name: "PM2 autostart"
-  shell: |
-    pm2 startup
-    pm2 save
+
 
 
 
