@@ -359,31 +359,29 @@ jobs:
             pip install awscli
             apk add --update nodejs npm ansible zip
       - run:
-        name: Configure server
-        command: |
-            echo ENVIROMENT=production > "backend/.env"
-            echo TYPEORM_CONNECTION=postgres >> "backend/.env"
-            echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> "backend/.env"
-            echo TYPEORM_HOST=$TYPEORM_HOST >> "backend/.env"
-            echo TYPEORM_PORT=$TYPEORM_PORT >> "backend/.env"
-            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> "backend/.env"
-            echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> "backend/.env"
-            echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> "backend/.env"
-            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> "backend/.env"
-            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
+          name: Configure server
+          command: |
+              echo ENVIROMENT=production > "backend/.env"
+              echo TYPEORM_CONNECTION=postgres >> "backend/.env"
+              echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> "backend/.env"
+              echo TYPEORM_HOST=$TYPEORM_HOST >> "backend/.env"
+              echo TYPEORM_PORT=$TYPEORM_PORT >> "backend/.env"
+              echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> "backend/.env"
+              echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> "backend/.env"
+              echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> "backend/.env"
+              echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> "backend/.env"
+              echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
           
             # your code here
       - run:
           name: Deploy backend
           command: |
-          
               cd backend
               apk add --update nodejs-npm
               apk add --update npm
               npm install
               npm run build
               echo build successful
-              
               tar czf backend.tar.gz .
               mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
               mv backend.tar.gz ~/project/.circleci/ansible/roles/deploy/files/
@@ -393,8 +391,8 @@ jobs:
 
             # your code here
       # Here's where you will add some code to rollback on failure  
-      #- destroy-environment:
-          to: "backend"
+      - destroy-environment:
+          to: "s3f"
           
 
   smoke-test:
