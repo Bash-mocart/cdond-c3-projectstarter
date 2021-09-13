@@ -370,17 +370,17 @@ jobs:
               npm install
               npm run build
               echo build successful
-              cd dist
-              tar czf dist.tar.gz .
+              
+              tar czf backend.tar.gz .
               mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
-              mv dist.tar.gz ~/project/.circleci/ansible/roles/deploy/files/
+              mv backend.tar.gz ~/project/.circleci/ansible/roles/deploy/files/
               pwd
               cd /root/project/.circleci/ansible
               ansible-playbook deploy-backend.yml -i inventory.txt 
 
             # your code here
       # Here's where you will add some code to rollback on failure  
-      #- destroy-environment:
+      - destroy-environment:
           to: "backend"
           
 
