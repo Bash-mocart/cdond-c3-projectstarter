@@ -208,7 +208,7 @@ jobs:
               --parameter-overrides ID=u15ch1136f 
       
       - run:
-          name: Add back-end ip to ansible inventory
+          name: Add back-end ip to ansible inventory 
           command: |
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
