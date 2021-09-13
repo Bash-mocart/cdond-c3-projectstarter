@@ -15,13 +15,11 @@
     dest: ~/backend
     remote_src: True
 
-- name: "copy node_modules"
-  become: yes
-  synchronize:
-    src: ../../backend/node_modules
+- name: "copy and unarchive node_modules"
+  unarchive:
+    src: node_modules.tar.gz
     dest: /home/ubuntu/backend
-    recursive: true
-
+    
 - name: "List backend contents"
   shell: |
       ls 
