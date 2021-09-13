@@ -36,7 +36,7 @@
 - name: "start app"
   shell: |      
       pm2 start main.js
-  args:
+  args: 
     chdir: /home/ubuntu/backend
 
 - name: "List processes"
