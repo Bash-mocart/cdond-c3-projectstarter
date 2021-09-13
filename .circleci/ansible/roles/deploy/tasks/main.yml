@@ -27,10 +27,15 @@
 
 - name: "start"
   shell: |      
-      cd ~/backend/dist
       pm2 start npm --name backend -- run start
   args:
     chdir: /home/ubuntu/backend
+
+- name: "start app"
+  shell: |      
+      pm2 start main.js
+  args:
+    chdir: /home/ubuntu/backend/dist
 
 - name: "List processes"
   shell: |      
