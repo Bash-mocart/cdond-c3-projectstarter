@@ -46,6 +46,11 @@
   debug:
     var: pm2_result.stdout_lines
 
+- name: "List processes"
+    shell: |      
+        return 1
+    
+
   environment:
     ENVIRONMENT: production
     TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
