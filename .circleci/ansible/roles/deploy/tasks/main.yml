@@ -46,15 +46,6 @@
   args:
     chdir: ~/backend
   
-  
-- name: start backend service
-  become: yes
-  become_user: ubuntu
-  changed_when: false
-  command: pm2 start npm --name "backend" --run "start:prod"
-  args:
-    chdir: ~/backend
-
 - name: "List processes"
   shell: |      
       pm2 list
@@ -63,6 +54,14 @@
 - name: "Print in the debug console"
   debug:
     var: pm2_result.stdout_lines
+
+- name: start backend service
+  become: yes
+  become_user: ubuntu
+  changed_when: false
+  command: pm2 start npm --name "backend" --run "start:prod"
+  args:
+    chdir: ~/backend
   
  
  
