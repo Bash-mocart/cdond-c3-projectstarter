@@ -6,12 +6,12 @@
 
 - name: Copy dist
   copy:
-    src: dist.tar.gz
-    dest: "~/backend/dist.tar.gz"
+    src: backend.tar.gz
+    dest: "~/backend/backend.tar.gz"
 
-- name: Copy dist
+- name: Unarchive Backend
   unarchive:
-    src: ~/backend/dist.tar.gz
+    src: ~/backend/backend.tar.gz
     dest: ~/backend
     remote_src: True
 
@@ -37,14 +37,13 @@
   shell: |
     cd ~/backend
     npm install
-    npm run build
-    npm run start
+    npm run start:prod
 
 - name: start backend service
   become: yes
   become_user: ubuntu
   changed_when: false
-  command: pm2 start -f main.js
+  command: pm2 start -f ./dist/main.js
   args:
     chdir: ~/backend
   
