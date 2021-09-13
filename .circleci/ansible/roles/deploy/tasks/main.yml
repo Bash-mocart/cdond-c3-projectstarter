@@ -20,7 +20,6 @@
   debug:
     var: shell_result.stdout_lines
     
-   
 - name: "Start Application"
   shell: |      
       pm2 start npm --name backend -- run start
