@@ -32,21 +32,16 @@
   ignore_errors: yes  
   command: pm2 stop all
 
-
 - name: "Install dependencies for project"
   shell: |
     cd ~/backend
-    npm install
-    npm run start:prod
-
-- name: start backend service
-  become: yes
-  become_user: ubuntu
-  changed_when: false
-  command: pm2 start -f ./dist/main.js
-  args:
-    chdir: ~/backend
+    npm run start
   
+- name: "List processes"
+  shell: |      
+      cd ~/backend/dist
+      pm2 start main.js -f
+
 - name: "List processes"
   shell: |      
       pm2 list
