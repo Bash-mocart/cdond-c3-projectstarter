@@ -6,30 +6,32 @@
 
 - name: Copy dist
   copy:
-    src: backend.tar.gz
-    dest: "~/backend/backend.tar.gz"
+    src: dist.tar.gz
+    dest: "~/backend/dist.tar.gz"
 
 - name: Unarchive Backend
   unarchive:
-    src: ~/backend/backend.tar.gz
+    src: ~/backend/dist.tar.gz
     dest: ~/backend
     remote_src: True
 
+- name: "copy node_modules"
+  become: yes
+  synchronize:
+    src: ../../backend/node_modules
+    dest: /home/ubuntu/backend
+    recursive: true
+
 - name: "List backend contents"
   shell: |
-      cd ~/backend
       ls 
   register: shell_result
+  args:
+    chdir: /home/ubuntu/backend
 
 - name: "Display as output"
   debug:
     var: shell_result.stdout_lines
-
-- name: "start"
-  shell: |      
-      pm2 start npm --name backend -- run start
-  args:
-    chdir: /home/ubuntu/backend
 
 - name: "start app"
   shell: |      
@@ -56,7 +58,7 @@
     TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
     TYPEORM_MIGRATIONS_DIR: "./migrations"
     TYPEORM_MIGRATIONS: "./migrations/*.js"
-    TYPEORM_ENTITIES: "./src/modules/**/*.entity.ts"
+    TYPEORM_ENTITIES: "./modules/domain/**/*.entity.js"
     TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST') }}"
     TYPEORM_PORT: "{{ lookup('env', 'TYPEORM_PORT') }}"
     TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME') }}"
