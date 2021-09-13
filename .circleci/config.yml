@@ -363,7 +363,7 @@ jobs:
           command: |
               echo ENVIROMENT=production > "backend/.env"
               echo TYPEORM_CONNECTION=postgres >> "backend/.env"
-              echo TYPEORM_ENTITIES=./src/modules/**/*.entity.ts >> "backend/.env"
+              echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> "backend/.env"
               echo TYPEORM_HOST=$TYPEORM_HOST >> "backend/.env"
               echo TYPEORM_PORT=$TYPEORM_PORT >> "backend/.env"
               echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> "backend/.env"
@@ -382,9 +382,10 @@ jobs:
               npm install
               npm run build
               echo build successful
-              tar czf backend.tar.gz .
+              cd dist
+              tar czf dist.tar.gz .
               mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
-              mv backend.tar.gz ~/project/.circleci/ansible/roles/deploy/files/
+              mv dist.tar.gz ~/project/.circleci/ansible/roles/deploy/files/
               pwd
               cd /root/project/.circleci/ansible
               ansible-playbook deploy-backend.yml -i inventory.txt 
