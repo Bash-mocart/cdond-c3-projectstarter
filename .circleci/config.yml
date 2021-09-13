@@ -357,7 +357,7 @@ jobs:
           command: |
             pip install --upgrade pip
             pip install awscli
-            apk add --update nodejs npm ansible zip
+            apk add --update nodejs npm ansible zip 
       - run:
           name: Configure server environment variables
           command: |
