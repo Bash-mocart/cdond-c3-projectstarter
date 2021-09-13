@@ -55,14 +55,6 @@
   debug:
     var: pm2_result.stdout_lines
 
-- name: start backend service
-  become: yes
-  become_user: ubuntu
-  changed_when: false
-  command: pm2 start npm --name "backend" --run "start:prod"
-  args:
-    chdir: ~/backend
-  
  
  
 
