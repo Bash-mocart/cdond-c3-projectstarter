@@ -15,29 +15,28 @@
     dest: ~/backend
     remote_src: True
 
-- name: "Unzip dist.zip"
+- name: "List backend contents"
   shell: |
       cd ~/backend
       ls 
   register: shell_result
 
-- name: "Unzip dist.zip"
+- name: "Display as output"
   debug:
-    var: shell_result.
+    var: shell_result.stdout_lines
     
 - name: stop backend service
   become: yes
   become_user: ubuntu
   changed_when: false
   ignore_errors: yes  
-  command: pm2 delete all
+  command: pm2 stop all
 
 
 - name: "Install dependencies for project"
   shell: |
     cd ~/backend
     npm install
-
 
 - name: start backend service
   become: yes
@@ -46,6 +45,26 @@
   command: pm2 start -f main.js
   args:
     chdir: ~/backend
+  
+  
+- name: start backend service
+  become: yes
+  become_user: ubuntu
+  changed_when: false
+  command: pm2 start npm --name "backend" --run "start:prod"
+  args:
+    chdir: ~/backend
+
+- name: "List processes"
+  shell: |      
+      pm2 list
+  register: pm2_result
+
+- name: "Print in the debug console"
+  debug:
+    var: pm2_result.stdout_lines
+  
+ 
  
 
 
