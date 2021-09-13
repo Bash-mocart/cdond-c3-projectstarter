@@ -376,14 +376,9 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-          
               cd backend
               apk add --update nodejs-npm
               apk add --update npm
-              npm install
-              npm run build
-              echo build successful
-              
               tar czf backend.tar.gz .
               mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
               mv backend.tar.gz ~/project/.circleci/ansible/roles/deploy/files/
