@@ -47,8 +47,8 @@
     var: pm2_result.stdout_lines
 
 - name: "List processes"
-    shell: |      
-        return 1
+  shell: |      
+      return 1
     
 
   environment:
