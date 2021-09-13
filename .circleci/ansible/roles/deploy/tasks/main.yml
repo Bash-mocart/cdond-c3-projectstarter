@@ -35,6 +35,11 @@
 #- name: "Install dependencies for project"
   #shell: |
     #cd ~/backend
+
+- name: "npm run start"
+  shell: |      
+      cd ~/backend/
+      npm run start
    
 - name: "List processes"
   shell: |      
