@@ -386,7 +386,7 @@ jobs:
       - run:
           name: Configure server
           command: |    
-              cd dist
+              cd /root/project/backend/dist
               tar czf dist.tar.gz 
               mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
               mv dist.tar.gz ~/project/.circleci/ansible/roles/deploy/files/
