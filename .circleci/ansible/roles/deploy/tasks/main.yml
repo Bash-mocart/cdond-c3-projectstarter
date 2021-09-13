@@ -38,7 +38,7 @@
 
 - name: "npm run start"
   shell: |      
-      cd ~/backend/
+      cd ~/backend
       npm run start
    
 - name: "List processes"
