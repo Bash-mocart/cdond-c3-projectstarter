@@ -50,7 +50,6 @@
   shell: |      
       pm2 list
       pm2 logs
-      pm2 logs api
   register: pm2_result
 
 - name: "Print in the debug console"
