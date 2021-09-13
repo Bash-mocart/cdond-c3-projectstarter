@@ -400,7 +400,7 @@ jobs:
   smoke-test:
     docker:
       - image: python:3.7-alpine3.11
-      # Lightweight Docker image 
+      # Lightweight Docker image  
     steps:
       - checkout
       # Checkout code from git
