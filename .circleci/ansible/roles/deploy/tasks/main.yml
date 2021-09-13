@@ -30,10 +30,20 @@
     cd ~/backend
     npm install
 
-- name: "Executing node"
-  shell: |
-    cd /home/ubuntu/backend
-    pm2 start main.js -f
+- name: stop backend service
+  become: yes
+  become_user: ubuntu
+  changed_when: false
+  ignore_errors: yes  
+  command: pm2 stop backend
+
+- name: start backend service
+  become: yes
+  become_user: ubuntu
+  changed_when: false
+  command: pm2 start --name backend npm -- start
+  args:
+    chdir: ~/backend
  
 - name: "PM2 autostart"
   shell: |
