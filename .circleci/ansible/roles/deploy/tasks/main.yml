@@ -35,7 +35,7 @@
 - name: "Install dependencies for project"
   shell: |
     cd ~/backend
-    npm run start
+    npm install
   
 - name: "List processes"
   shell: |      
