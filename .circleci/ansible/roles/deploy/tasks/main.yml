@@ -1,23 +1,16 @@
 ---
-- name: Creates directory
-  file:
-    path: ~/backend
-    state: directory
-
-- name: Copy dist
-  copy:
-    src: backend.tar.gz
-    dest: "~/backend/backend.tar.gz"
+- name: Upgrade npm
+  become: true
+  shell: |
+    npm install -g npm@latest
 
 - name: Unarchive Backend
   unarchive:
-    src: ~/backend/backend.tar.gz
-    dest: ~/backend
-    remote_src: True
+    src: /root/project/backend.tar.gz
+    dest: /home/ubuntu/
 
 - name: "List backend contents"
   shell: |
-      cd ~/backend
       ls 
   register: shell_result
 
@@ -38,12 +31,11 @@
 
 - name: "npm run start"
   shell: |      
-      cd ~/backend
       npm run start
    
 - name: "List processes"
   shell: |      
-      cd ~/backend/dist
+      cd ~/dist
       pm2 start main.js -f
 
 - name: "List processes"
