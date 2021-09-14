@@ -18,17 +18,6 @@
   unarchive:
     src: node_modules.tar.gz
     dest: /home/ubuntu/node_modules/
-    
-- name: "List backend contents"
-  shell: |
-      ls 
-  register: shell_result
-  args:
-    chdir: /home/ubuntu/
-
-- name: "Display as output"
-  debug:
-    var: shell_result.stdout_lines
 
 - name: "start app"
   shell: |      
@@ -45,10 +34,6 @@
   debug:
     var: pm2_result.stdout_lines
 
-- name: "List processes"
-  shell: |      
-      return 1
-    
   environment:
     ENVIRONMENT: production
     TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
