@@ -28,7 +28,6 @@
 - name: "List processes"
   shell: |      
       pm2 list
-      return 1
   register: pm2_result
 
 - name: "Print in the debug console"
