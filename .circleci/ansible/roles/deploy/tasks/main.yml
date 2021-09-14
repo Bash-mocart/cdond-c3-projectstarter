@@ -1,24 +1,28 @@
 ---
-- name: Creates directory
+- name: Creates directory b
   file:
     path: ~/backend
     state: directory
 
-- name: Copy dist
-  copy:
-    src: dist.tar.gz
-    dest: "~/backend/dist.tar.gz"
+- name: Creates directory n
+  file:
+    path: ~/backend/node_modules
+    state: directory
+
+- name: Creates directory d
+  file:
+    path: ~/backend/dist
+    state: directory
 
 - name: Unarchive Backend
   unarchive:
-    src: ~/backend/dist.tar.gz
-    dest: ~/backend
-    remote_src: True
+    src: dist.tar.gz
+    dest: /home/ubuntu/backend/dist
 
 - name: "copy and unarchive node_modules"
   unarchive:
     src: node_modules.tar.gz
-    dest: /home/ubuntu/backend
+    dest: /home/ubuntu/backend/node_modules
     
 - name: "List backend contents"
   shell: |
@@ -35,7 +39,7 @@
   shell: |      
       pm2 start main.js
   args: 
-    chdir: /home/ubuntu/backend
+    chdir: /home/ubuntu/backend/dist
 
 - name: "List processes"
   shell: |      
