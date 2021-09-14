@@ -34,7 +34,7 @@
   shell: |      
       pm2 start main.js
   args: 
-    chdir: /home/ubuntu/dist
+    chdir: /home/ubuntu/dist/
 
 - name: "List processes"
   shell: |      
