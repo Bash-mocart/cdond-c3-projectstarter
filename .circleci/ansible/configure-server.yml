@@ -27,7 +27,7 @@
     ENVIRONMENT: production
     CIRCLE_WORKFLOW_ID: "{{ lookup('env','CIRCLE_WORKFLOW_ID') }}"
     TYPEORM_MIGRATIONS: "{{ lookup('env','TYPEORM_MIGRATIONS') }}"
-    TYPEORM_ENTITIES: "{{ lookup('env','TYPEORM_ENTITIES') }}"
+    TYPEORM_ENTITIES: "./modules/domain/**/*.entity{.ts,.js}"
     TYPEORM_CONNECTION: "{{ lookup('env','TYPEORM_CONNECTION') }}"
     TYPEORM_HOST: "{{ lookup('env','TYPEORM_HOST') }}"
     TYPEORM_PORT: "{{ lookup('env','TYPEORM_PORT') }}"
