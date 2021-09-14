@@ -457,10 +457,10 @@ jobs:
     steps:
       - checkout
       # Checkout code from git
-      - run:
-          name: Install dependencies
-          command: |
-              npm install
+      #- run:
+          #name: Install dependencies
+          #command: |
+              #npm install
             # your code here
       - run:
           name: Update cloudfront distribution
