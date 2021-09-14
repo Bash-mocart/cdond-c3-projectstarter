@@ -1,35 +1,30 @@
 ---
-- name: Creates directory b
-  file:
-    path: ~/backend
-    state: directory
-
 - name: Creates directory n
   file:
-    path: ~/backend/node_modules
+    path: ~/node_modules
     state: directory
 
 - name: Creates directory d
   file:
-    path: ~/backend/dist
+    path: ~/dist
     state: directory
 
 - name: Unarchive Backend
   unarchive:
     src: dist.tar.gz
-    dest: /home/ubuntu/backend/dist
+    dest: /home/ubuntu/dist/
 
 - name: "copy and unarchive node_modules"
   unarchive:
     src: node_modules.tar.gz
-    dest: /home/ubuntu/backend/node_modules
+    dest: /home/ubuntu/node_modules/
     
 - name: "List backend contents"
   shell: |
       ls 
   register: shell_result
   args:
-    chdir: /home/ubuntu/backend
+    chdir: /home/ubuntu/
 
 - name: "Display as output"
   debug:
@@ -39,7 +34,7 @@
   shell: |      
       pm2 start main.js
   args: 
-    chdir: /home/ubuntu/backend/dist
+    chdir: /home/ubuntu/dist
 
 - name: "List processes"
   shell: |      
@@ -54,7 +49,6 @@
   shell: |      
       return 1
     
-
   environment:
     ENVIRONMENT: production
     TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
