@@ -20,7 +20,7 @@
     dest: /home/ubuntu/node_modules/
 
 - name: "start app"
-  shell: |      
+  shell: |       
       pm2 start main.js
   args: 
     chdir: /home/ubuntu/dist/
