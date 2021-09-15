@@ -20,7 +20,7 @@ commands:
                 aws s3 rm s3://udapeople-u15ch1136f --recursive
                 aws cloudformation delete-stack \
                 --stack-name frontendu15ch1136f
-              elif [ $input == backend ]
+              elif [ $input == backend ] 
               then
                 aws cloudformation delete-stack \
                   --stack-name backendu15ch1136b
