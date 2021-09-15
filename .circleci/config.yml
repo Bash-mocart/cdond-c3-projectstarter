@@ -468,8 +468,8 @@ jobs:
               aws cloudformation deploy \
               --template-file .circleci/files/cloudfront.yml \
               --tags project=udacity-cloudfront \
-              --stack-name green-deployment \
-              --parameter-overrides WorkflowID=green0 
+              --stack-name project3 \
+              --parameter-overrides WorkflowID=u15ch1136f 
             # your code here
       - destroy-environment
           
