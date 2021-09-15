@@ -465,6 +465,10 @@ jobs:
       - run:
           name: Update cloudfront distribution
           command: |
+              export OldWorkflow=$(aws cloudformation \
+                  list-exports --query "Exports[?Name==\`OldWorkflowID\`].Value" \
+                  --no-paginate --output text)
+              curl -H "Content-Type: text/plain" -H "token: a0ba2ffd-167a-4fb4-aae7-03be0be616b3" --request PUT --data ${OldWorkflow} https://api.memstash.io/values/old
               aws cloudformation deploy \
               --template-file .circleci/files/cloudfront.yml \
               --tags project=udacity-cloudfront \
@@ -484,9 +488,7 @@ jobs:
         - run:
             name: Get old stack workflow id
             command: |
-                  export OldWorkflowID=$(aws cloudformation \
-                  list-exports --query "Exports[?Name==\`OldWorkflowID\`].Value" \
-                  --no-paginate --output text)
+                  export OldWorkflowID=$(curl -H "token: a0ba2ffd-167a-4fb4-aae7-03be0be616b3" --request GET https://api.memstash.io/values/old)
                   export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
                   --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
         - run:          
