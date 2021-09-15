@@ -1,21 +1,25 @@
 ---
 - name: Creates directory etc
+  become: true
   file:
     path: /etc/prometheus
     state: directory
 
 - name: Creates directory var
+  become: true
   file:
     path: /var/lib/prometheus
     state: directory
 
 - name: Unarchive prometheus
+  become: true
   unarchive:
     src:  https://github.com/prometheus/prometheus/releases/download/v2.19.0/prometheus-2.19.0.linux-amd64.tar.gz
     dest: /home/ubuntu/
     remote_src: True
 
 - name: copy prometheus files
+  become: true
   copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -27,12 +31,14 @@
     - { src: 'prometheus-2.19.0.linux-amd64/console_libraries',dest: '/etc/prometheus'}
 
 - name: "copying recursively"
+  become: true
   shell: |       
       cp -r prometheus-2.19.0.linux-amd64/consoles /etc/prometheus
       cp -r prometheus-2.19.0.linux-amd64/console_libraries /etc/prometheus
       rm -rf prometheus-2.19.0.linux-amd64.tar.gz prometheus-2.19.0.linux-amd64
 
 - name: Copy and (overwrite) prometheus.yml prometheus.service
+  become: true
   copy:
     src: "{{ item.src }}"
     dest:  "{{ item.dest }}"
@@ -41,6 +47,7 @@
     - { src: 'prometheus.service',dest: '/etc/systemd/system/'}
 
 - name: "start app"
+  become: true
   shell: |       
       systemctl daemon-reload
       systemctl enable prometheus
