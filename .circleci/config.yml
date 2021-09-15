@@ -232,8 +232,7 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udapeople-prometheus" \
               --output text >> .circleci/ansible/prom-inventory.txt
-              #curl -H "Content-Type: text/plain" -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request PUT --data $(cat backend_url.txt) https://api.memstash.io/values/backend
-              #curl -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request GET https://api.memstash.io/values/backend >> .circleci/ansible/prom-inventory.txt
+  
               
       - persist_to_workspace:
           root: ~/
