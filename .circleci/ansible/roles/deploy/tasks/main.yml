@@ -14,7 +14,7 @@
     src: dist.tar.gz
     dest: /home/ubuntu/dist/
 
-- name: "copy and unarchive node_modules"
+- name: Copy and unarchive node_modules
   unarchive:
     src: node_modules.tar.gz
     dest: /home/ubuntu/node_modules/
