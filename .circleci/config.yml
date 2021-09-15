@@ -228,13 +228,13 @@ jobs:
       - run:
           name: Add prometheus ip to ansible inventory prometheus
           command: |
-            echo [prom] >> .circleci/ansible/inventory.txt
+            echo [prom] >> .circleci/ansible/prom-inventory.txt
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udapeople-prometheus" \
-              --output text >> .circleci/ansible/inventory.txt
+              --output text >> .circleci/ansible/prom-inventory.txt
               #curl -H "Content-Type: text/plain" -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request PUT --data $(cat backend_url.txt) https://api.memstash.io/values/backend
-              #curl -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request GET https://api.memstash.io/values/backend >> .circleci/ansible/inventory.txt
+              #curl -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request GET https://api.memstash.io/values/backend >> .circleci/ansible/prom-inventory.txt
               
       - persist_to_workspace:
           root: ~/
@@ -271,7 +271,7 @@ jobs:
             ansible-playbook configure-server.yml -i inventory.txt
             sed -i 's/PUT_THE_ACCESS_KEY_HERE/$AWS_ACCESS_KEY_ID/g' .circleci/ansible/roles/prometheus-server/files/prometheus.yml
             sed -i 's/PUT_THE_SECRET_KEY_HERE/$AWS_SECRET_ACCESS_KEY/g' .circleci/ansible/roles/prometheus-server/files/prometheus.yml
-            ansible-playbook configure-prometheus.yml -i inventory.txt
+            ansible-playbook configure-prometheus.yml -i prom-inventory.txt
       - destroy-environment
 
       # Here's where you will add some code to rollback on failure      
