@@ -261,14 +261,6 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-           # apk update
-           # apk upgrade
-           # apk add curl
-           # apk add ansible
-           # add flatpak stackoverflow read more
-           # curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-           # unzip awscliv2.zip
-           # flatpak run ./aws/install
            pip install --upgrade pip
            pip install awscli
            apk add ansible
