@@ -396,6 +396,7 @@ jobs:
               pwd
               cd /root/project/.circleci/ansible
               ansible-playbook deploy-backend.yml -i inventory.txt 
+              ansible-playbook deploy-backend.yml -i inventory.txt 
 
             # your code here
       # Here's where you will add some code to rollback on failure  
