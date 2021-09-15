@@ -15,7 +15,7 @@
     dest: /home/ubuntu/
     remote_src: True
 
-- name: Copy multiple files in Ansible with different permissions
+- name: copy prometheus files
     copy:
       src: "{{ item.src }}"
       dest: "{{ item.dest }}"
@@ -26,7 +26,7 @@
       - { src: 'prometheus-2.19.0.linux-amd64/promtool',dest: '/usr/local/bin/'}
       - { src: 'prometheus-2.19.0.linux-amd64/console_libraries',dest: '/etc/prometheus'}
 
-- name: "start app"
+- name: "copying recursively"
   shell: |       
       cp -r prometheus-2.19.0.linux-amd64/consoles /etc/prometheus
       cp -r prometheus-2.19.0.linux-amd64/console_libraries /etc/prometheus
