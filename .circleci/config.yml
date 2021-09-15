@@ -224,7 +224,7 @@ jobs:
       - destroy-environment
           
         
-  
+   
 
   configure-infrastructure:
     docker:
