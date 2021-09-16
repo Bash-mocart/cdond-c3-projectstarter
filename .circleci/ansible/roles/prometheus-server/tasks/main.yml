@@ -1,11 +1,17 @@
 ---
+- name: "add users node exporter and prome"
+  become: true
+  shell: |       
+        useradd --no-create-home --shell /bin/false prome
+        useradd --no-create-home --shell /bin/false node_exporter
+
 - name: Creates directory etc
   become: true
   file:
     path: /etc/prometheus
     state: directory
 
-- name: Creates directory var
+- name: Creates directory prometheus
   become: true
   file:
     path: /var/lib/prometheus
@@ -25,10 +31,15 @@
     dest: "{{ item.dest }}"
     remote_src: yes
   with_items:
-    - { src: 'prometheus-2.19.0.linux-amd64/prometheus',dest: '/usr/local/bin'}
-    - { src: 'prometheus-2.19.0.linux-amd64/promtool',dest: '/usr/local/bin/'}
+    - { src: 'prometheus-2.19.0.linux-amd64/prometheus',dest: '/usr/local/bin/'}
     - { src: 'prometheus-2.19.0.linux-amd64/promtool',dest: '/usr/local/bin/'}
     - { src: 'prometheus-2.19.0.linux-amd64/console_libraries',dest: '/etc/prometheus'}
+
+- name: "change ownership of prometheus and promotool"
+  become: true
+  shell: |       
+          chown prome:prome /usr/local/bin/prometheus
+          chown prome:prome /usr/local/bin/promtool
 
 - name: "copying recursively"
   become: true
@@ -36,6 +47,14 @@
       cp -r prometheus-2.19.0.linux-amd64/consoles /etc/prometheus
       cp -r prometheus-2.19.0.linux-amd64/console_libraries /etc/prometheus
       rm -rf prometheus-2.19.0.linux-amd64.tar.gz prometheus-2.19.0.linux-amd64
+
+- name: "change ownership of console libraries"
+  become: true
+  shell: |       
+          chown -R prome:prome /etc/prometheus/consoles
+          chown -R prome:prome /etc/prometheus/console_libraries
+          chown -R prome:prome /var/lib/prometheus
+
 
 - name: Copy and (overwrite) prometheus.yml prometheus.service
   become: true
@@ -50,5 +69,13 @@
   become: true
   shell: |       
       systemctl daemon-reload
+      systemctl start prometheus
       systemctl enable prometheus
+      systemctl status prometheus
       #systemctl restart prometheus
+  register: startapp-output
+
+- name: Display output
+  debug:
+    var: startapp-output
+    
