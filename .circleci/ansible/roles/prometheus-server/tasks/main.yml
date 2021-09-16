@@ -86,7 +86,5 @@
   debug:
     var: startapp.stdout_lines 
 
-- name: Display output
-  fail: msg="User creation has failed."
-  when: flag == "failed"
+
     
