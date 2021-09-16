@@ -80,11 +80,11 @@
       systemctl enable prometheus
       systemctl status prometheus
       #systemctl restart prometheus
-  register: startapp-output 
+  register: startapp 
 
 - name: Display output
   debug:
-    var: startapp-output.stdout_lines 
+    var: startapp.stdout_lines 
 
 - name: Display output
   fail: msg="User creation has failed."
