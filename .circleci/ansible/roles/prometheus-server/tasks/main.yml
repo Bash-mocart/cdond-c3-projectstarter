@@ -58,7 +58,7 @@
 - name: Copy and (overwrite) prometheus.yml prometheus.service
   become: true
   copy: 
-    src: "{{ item.src }}"
+    src: "{{ item.src }}" 
     dest:  "{{ item.dest }}"
   with_items:
     - { src: 'prometheus.yml',dest: '/etc/prometheus/'}
