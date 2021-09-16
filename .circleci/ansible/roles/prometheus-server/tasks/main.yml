@@ -4,6 +4,14 @@
   shell: |       
         useradd --no-create-home --shell /bin/false prome
         useradd --no-create-home --shell /bin/false node_exporter
+  ignore_errors: yes
+  register: fail
+
+- name: Set flag
+  set_fact: flag = failed
+  when: "'already exists' in fail.stderr"
+
+
 
 - name: Creates directory etc
   become: true
@@ -77,4 +85,8 @@
 - name: Display output
   debug:
     var: startapp-output.stdout_lines 
+
+- name: Display output
+  fail: msg="User creation has failed."
+  when: flag == "failed"
     
