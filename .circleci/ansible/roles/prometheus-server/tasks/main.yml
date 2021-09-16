@@ -72,7 +72,7 @@
       systemctl enable prometheus
       systemctl status prometheus
       #systemctl restart prometheus
-  register: startapp-output
+  register: startapp-output 
 
 - name: Display output
   debug:
