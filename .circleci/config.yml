@@ -271,6 +271,7 @@ jobs:
             ansible-playbook configure-server.yml -i inventory.txt
             sed -i 's/PUT_THE_ACCESS_KEY_HERE/$AWS_ACCESS_KEY_ID/g' roles/prometheus-server/files/prometheus.yml
             sed -i 's/PUT_THE_SECRET_KEY_HERE/$AWS_SECRET_ACCESS_KEY/g' roles/prometheus-server/files/prometheus.yml
+            cat roles/prometheus-server/files/prometheus.yml
             ansible-playbook configure-prometheus.yml -i prom-inventory.txt
       - destroy-environment
 
