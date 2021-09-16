@@ -205,16 +205,7 @@ jobs:
               --template-file .circleci/files/frontend.yml \
               --tags project=udacity-frontend \
               --stack-name frontendu15ch1136f \
-              --parameter-overrides ID=u15ch1136f 
-
-      - run:
-          name: Ensure prometheus infrastructure exist
-          command: |
-            aws cloudformation deploy \
-              --template-file .circleci/files/prometheus.yml \
-              --tags project=udapeople-prometheus \
-              --stack-name udapeople-prometheus 
-              
+              --parameter-overrides ID=u15ch1136f   
       - run:
           name: Add back-end ip to ansible inventory
           command: |
@@ -224,22 +215,11 @@ jobs:
               --output text >> backend_url.txt
               curl -H "Content-Type: text/plain" -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request PUT --data $(cat backend_url.txt) https://api.memstash.io/values/backend
               curl -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request GET https://api.memstash.io/values/backend >> .circleci/ansible/inventory.txt
-     
-      - run:
-          name: Add prometheus ip to ansible inventory prometheus
-          command: |
-            aws ec2 describe-instances \
-              --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:project,Values=udapeople-prometheus" \
-              --output text >> .circleci/ansible/prom-inventory.txt
-  
-              
+                   
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/.circleci/ansible/inventory.txt
-            - project/.circleci/ansible/prom-inventory.txt
-            
+            - project/.circleci/ansible/inventory.txt    
       - destroy-environment
           
         
@@ -269,10 +249,6 @@ jobs:
           command: |
             cd .circleci/ansible/
             ansible-playbook configure-server.yml -i inventory.txt
-            #sed -i "s/PUT_THE_ACCESS_KEY_HERE/$AWS_ACCESS_KEY_ID/g" roles/prometheus-server/files/prometheus.yml
-            #sed -i "s/PUT_THE_SECRET_KEY_HERE/$AWS_SECRET_ACCESS_KEY/g" roles/prometheus-server/files/prometheus.yml
-            cat roles/prometheus-server/files/prometheus.yml
-            ansible-playbook configure-prometheus.yml -i prom-inventory.txt
       - destroy-environment
 
       # Here's where you will add some code to rollback on failure      
