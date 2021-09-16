@@ -76,5 +76,5 @@
 
 - name: Display output
   debug:
-    var: startapp-output.stdout
+    var: startapp-output.stdout_lines 
     
