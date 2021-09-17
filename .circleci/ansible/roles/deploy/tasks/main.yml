@@ -21,7 +21,7 @@
 
 - name: "start app"
   shell: |       
-      pm2 start main.js -f
+      pm2 start main.js 
   args: 
     chdir: /home/ubuntu/dist/
 
