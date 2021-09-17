@@ -325,6 +325,8 @@ jobs:
               npx browserslist@latest --update-db
               npm install
               npm run build
+              echo NODE_ENV=production > "frontend/dist/.env"
+              echo API_URL=$API_URL > "frontend/dist/.env"
               npx browserslist@latest --update-db
               aws s3 cp ./dist/ s3://udapeople-u15ch1136f/ --recursive
 
