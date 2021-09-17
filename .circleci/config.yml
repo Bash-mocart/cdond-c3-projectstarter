@@ -321,8 +321,9 @@ jobs:
               cd frontend
               npm install
               npm run build
+              URL=$(curl -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request GET https://api.memstash.io/values/backend)
               echo NODE_ENV=production > "frontend/dist/.env"
-              echo API_URL=$(curl -H "token: 7d785f18-ed4c-4b0a-b371-f672266ac661" --request GET https://api.memstash.io/values/backendurl) >> "frontend/dist/.env"
+              echo API_URL=$URL >> "frontend/dist/.env"
               aws s3 cp ./dist/ s3://udapeople-u15ch1136f/ --recursive
 
             # your code here
@@ -389,7 +390,6 @@ jobs:
               mv node_modules.tar.gz ~/project/.circleci/ansible/roles/deploy/files/
               pwd
               cd /root/project/.circleci/ansible
-              ansible-playbook deploy-backend.yml -i inventory.txt 
               ansible-playbook deploy-backend.yml -i inventory.txt 
 
             # your code here
