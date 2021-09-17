@@ -321,9 +321,6 @@ jobs:
               cd frontend
               npm install
               npm run build
-              URL=$(curl -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request GET https://api.memstash.io/values/backend)
-              echo NODE_ENV=production > "frontend/dist/.env"
-              echo API_URL=${URL} >> "frontend/dist/.env"
               aws s3 cp ./dist/ s3://udapeople-u15ch1136f/ --recursive
 
             # your code here
