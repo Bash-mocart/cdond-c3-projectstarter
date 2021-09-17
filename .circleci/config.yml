@@ -322,8 +322,10 @@ jobs:
               export API_URL="http://${URL}:3030" 
               curl -H "Content-Type: text/plain" -H "token: 7d785f18-ed4c-4b0a-b371-f672266ac661" --request PUT --data ${API_URL} https://api.memstash.io/values/backendurl    
               cd frontend
+              npx browserslist@latest --update-db
               npm install
               npm run build
+              npx browserslist@latest --update-db
               aws s3 cp ./dist/ s3://udapeople-u15ch1136f/ --recursive
 
             # your code here
