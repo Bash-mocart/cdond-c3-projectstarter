@@ -338,7 +338,7 @@ jobs:
       # Docker image here that supports Ansible
     steps:
       # Checkout code from git
-      - checkout 
+      - checkout  
       # Add ssh keys with fingerprint
       - add_ssh_keys:
           fingerprints: ["8d:2a:24:bc:9d:3f:a4:0b:51:09:bd:9d:e0:53:25:57"]
