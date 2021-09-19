@@ -44,3 +44,17 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub backend-${ID}
+
+  NatGatewayEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      Tags:
+      - Key: Name
+        Value: !Sub elastic-ip-${ID}
+        
+  InstanceEIPAssociation:
+    Type: AWS::EC2::EIPAssociation
+    Properties:
+      EIP: !Ref NatGatewayEIP
+      InstanceId: !Ref EC2Instance
