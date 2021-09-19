@@ -306,7 +306,7 @@ jobs:
               sudo ./aws/install
                   
       - run:
-          name: Deploy frontend objects
+          name: Deploy frontend objects 
           command: |
               URL=$(curl -H "token: a9aafe79-89cc-4014-a391-25cd1563e4d4" --request GET https://api.memstash.io/values/backend)
               export API_URL="http://${URL}:3030" 
