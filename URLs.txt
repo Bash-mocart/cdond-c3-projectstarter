@@ -5,6 +5,6 @@ http://udapeople-u15ch1136f.s3-website-us-east-1.amazonaws.com/#/employees
 Public URL for your CloudFront distribution (aka, your blue production front-end) [URL03]
 http://d3fryfkd1h5k0d.cloudfront.net/#/employees
 Public URLs to deployed application back-end in EC2 [URL04]
-ec2-3-95-175-0.compute-1.amazonaws.com
+http://ec2-3-95-175-0.compute-1.amazonaws.com
 Public URL to your Prometheus Server [URL05]
 http://ec2-54-205-38-55.compute-1.amazonaws.com:9090/alerts
